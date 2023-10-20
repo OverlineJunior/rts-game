@@ -1,0 +1,32 @@
+{
+  "name": "rts-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rbxtsc",
+    "watch": "rbxtsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rbxts/compiler-types": "^2.2.0-types.0",
+    "@rbxts/types": "^1.0.723",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-roblox-ts": "^0.0.36",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@rbxts/make": "^1.0.6",
+    "@rbxts/matter": "^0.6.4",
+    "@rbxts/net": "^3.0.7",
+    "@rbxts/plasma": "^0.4.1-ts.1",
+    "@rbxts/services": "^1.5.1"
+  }
+}

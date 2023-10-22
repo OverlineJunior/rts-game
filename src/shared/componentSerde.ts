@@ -13,7 +13,7 @@ function findComponentCtor(name: string) {
 
 	for (const [n, ctor] of pairs(clientCtors)) {
 		if (n === name) {
-			return ctor as (data: AnyComponent) => AnyComponent
+			return ctor as unknown as (data: AnyComponent) => AnyComponent
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import { Players, ReplicatedStorage, ServerScriptService } from "@rbxts/services"
-import { Owner, Position, Unit } from "shared/components"
+import { GoalPositions, Owner, Position, Unit } from "shared/components"
 import startMatter from "shared/startMatter"
 import { Replicated } from "./components"
 
@@ -12,6 +12,7 @@ Players.PlayerAdded.Connect((player) => {
 		Unit({ kind: "TestUnit" }),
 		Owner({ player }),
 		Position({ value: Vector3.zero }),
+		GoalPositions({ queue: new Array() }),
 		Replicated({ finishedFor: new Array() }),
 	)
 })

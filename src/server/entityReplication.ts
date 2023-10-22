@@ -1,21 +1,11 @@
 import { AnyComponent } from "@rbxts/matter/lib/component"
+import { serializeComponents } from "shared/componentSerde"
 import remotes from "shared/remotes"
 
 const spawnOnClient = remotes.Server.Get("spawnOnClient")
 const despawnOnClient = remotes.Server.Get("despawnOnClient")
 
 let serverId = 1
-
-function getComponentName(comp: AnyComponent) {
-	return tostring(getmetatable(comp))
-}
-
-function serializeComponents(comps: Array<AnyComponent>) {
-	const ser: Map<string, AnyComponent> = new Map()
-	comps.forEach((c) => ser.set(getComponentName(c), c))
-
-	return ser
-}
 
 /**
  * Spawns a new entity in each of the clients' worlds with the given components.

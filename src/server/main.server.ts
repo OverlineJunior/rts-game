@@ -9,7 +9,7 @@ const world = startMatter(containers, serverState)
 
 Players.PlayerAdded.Connect((player) => {
 	world.spawn(
-		Unit({}),
+		Unit({ kind: "TestUnit" }),
 		Owner({ player }),
 		Position({ value: Vector3.zero }),
 		Replicated({ finishedFor: new Array() }),

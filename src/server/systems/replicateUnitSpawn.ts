@@ -9,7 +9,7 @@ function replicateUnitSpawn(world: World) {
 		const clientsLeft = Players.GetPlayers().filter((c) => !repl.finishedFor.includes(c))
 		if (clientsLeft.isEmpty()) continue
 
-		spawnFor(clientsLeft, [unit, owner, pos])
+		spawnFor(clientsLeft, id, [unit, owner, pos])
 
 		world.insert(
 			id,

@@ -11,4 +11,9 @@ interface ReplicatedStorage extends Instance {
 	shared: Folder & {
 		systems: Folder
 	}
+	assets: Folder & {
+		units: Folder & {
+			testUnit: Model
+		}
+	}
 }

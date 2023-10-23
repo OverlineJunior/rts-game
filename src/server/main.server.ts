@@ -12,7 +12,7 @@ Players.PlayerAdded.Connect((player) => {
 		Unit({ kind: "TestUnit" }),
 		Owner({ player }),
 		Position({ value: Vector3.zero }),
-		GoalPositions({ queue: [new Vector3(50, 0, 50)] }),
+		GoalPositions({ queue: [new Vector3(20, 0, 20), new Vector3(10, 0, 20), Vector3.zero] }),
 		Replicated({ finishedFor: new Array() }),
 	)
 })

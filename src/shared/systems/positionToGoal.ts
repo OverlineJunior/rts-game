@@ -1,17 +1,15 @@
 import { World, useDeltaTime } from "@rbxts/matter"
-import { GoalPositions, Position } from "shared/components"
+import { GoalPositions, Position, Speed } from "shared/components"
 
 function positionToGoal(world: World) {
-	for (const [id, pos, goals] of world.query(Position, GoalPositions)) {
+	for (const [id, pos, goals, speed] of world.query(Position, GoalPositions, Speed)) {
 		if (goals.queue.isEmpty()) continue
-
-		const speed = 5
-		const dt = useDeltaTime()
 
 		const goalPos = goals.queue[0]
 		const dir = goalPos.sub(pos.value).Unit
 		const dist = goalPos.sub(pos.value).Magnitude
-		const willFinishNow = dist <= speed * dt
+		const dt = useDeltaTime()
+		const willFinishNow = dist <= speed.base * dt
 
 		let newPos: Vector3
 
@@ -19,7 +17,7 @@ function positionToGoal(world: World) {
 			newPos = goalPos
 			goals.queue.shift()
 		} else {
-			newPos = pos.value.add(dir.mul(speed * dt))
+			newPos = pos.value.add(dir.mul(speed.base * dt))
 		}
 
 		world.insert(

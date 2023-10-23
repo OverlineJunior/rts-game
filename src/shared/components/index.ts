@@ -10,4 +10,7 @@ export type Owner = ReturnType<typeof Owner>
 export const GoalPositions = component<{ queue: Array<Vector3> }>("GoalPositions")
 export type GoalPositions = ReturnType<typeof GoalPositions>
 
+export const Speed = component<{ base: number }>("Speed")
+export type Speed = ReturnType<typeof Speed>
+
 export { Unit }

@@ -3,7 +3,12 @@ import { ReplicatedStorage } from "@rbxts/services"
 
 export type UnitKind = "TestUnit"
 
-export const Unit = component<{ kind: UnitKind }>("Unit")
+export const Unit = component<{
+	kind: UnitKind
+	remotes: {
+		sendGoalPosition: RemoteEvent<(goalPosition: Vector3) => void>
+	}
+}>("Unit")
 export type Unit = ReturnType<typeof Unit>
 
 const units = ReplicatedStorage.assets.units

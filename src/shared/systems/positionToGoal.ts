@@ -15,7 +15,16 @@ function positionToGoal(world: World) {
 
 		if (willFinishNow) {
 			newPos = goalPos
-			goals.queue.shift()
+
+			const shifted = [...goals.queue]
+			shifted.shift()
+
+			world.insert(
+				id,
+				goals.patch({
+					queue: shifted,
+				}),
+			)
 		} else {
 			newPos = pos.value.add(dir.mul(speed.base * dt))
 		}

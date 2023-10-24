@@ -3,8 +3,13 @@ import { Renderable } from "client/components"
 import { Position } from "shared/components"
 
 function moveRenderable(world: World) {
-	for (const [_, render, pos] of world.query(Renderable, Position)) {
-		render.model.PivotTo(new CFrame(pos.value))
+	for (const [id, posRec] of world.queryChanged(Position)) {
+		if (!posRec.new) continue
+
+		const render = world.get(id, Renderable)
+		if (!render) continue
+
+		render.model.PivotTo(new CFrame(posRec.new.value))
 	}
 }
 

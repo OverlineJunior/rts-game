@@ -16,7 +16,13 @@ function makeRemoteEvent(name: string) {
 
 export function unitBundle(owner: Player, kind: UnitKind, speed: number) {
 	return [
-		Unit({ kind, remotes: { sendGoalPosition: makeRemoteEvent("sendGoalPosition") } }),
+		Unit({
+			kind,
+			remotes: {
+				sendGoalPosition: makeRemoteEvent("sendGoalPosition"),
+				replicateGoalQueue: makeRemoteEvent("replicateGoalQueue"),
+			},
+		}),
 		Owner({ player: owner }),
 		Position({ value: Vector3.zero }),
 		// ! Temporary for testing.

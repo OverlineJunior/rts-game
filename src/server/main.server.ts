@@ -6,4 +6,4 @@ const containers = [ServerScriptService.server.systems, ReplicatedStorage.shared
 const serverState = {}
 const world = startMatter(containers, serverState)
 
-Players.PlayerAdded.Connect((player) => world.spawn(...unitBundle(player, "TestUnit", 10)))
+Players.PlayerAdded.Connect((player) => world.spawn(...unitBundle(player, "TestUnit", 25)))

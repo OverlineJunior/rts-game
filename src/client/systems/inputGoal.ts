@@ -12,7 +12,7 @@ function inputGoal(world: World) {
 
 		// ! Temporary. Get mouse's world position.
 		const goalPosition = new Vector3(math.random(-50, 50), 0, math.random(-50, 50))
-		const clearGoals = UserInputService.IsKeyDown(LSHIFT)
+		const clearGoals = !UserInputService.IsKeyDown(LSHIFT)
 
 		for (const [_, unit, owner] of world.query(Unit, Owner, GoalPositions)) {
 			if (owner.player !== CLIENT) continue

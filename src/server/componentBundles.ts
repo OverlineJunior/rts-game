@@ -25,8 +25,7 @@ export function unitBundle(owner: Player, kind: UnitKind, speed: number) {
 		}),
 		Owner({ player: owner }),
 		Position({ value: Vector3.zero }),
-		// ! Temporary for testing.
-		GoalPositions({ queue: [new Vector3(20, 0, 20), new Vector3(10, 0, 20), Vector3.zero] }),
+		GoalPositions({ queue: [] }),
 		Speed({ base: speed }),
 		Replicated({ finishedFor: [] }),
 	]

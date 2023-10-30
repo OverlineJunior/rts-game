@@ -2,7 +2,7 @@ import { World } from "@rbxts/matter"
 import { Renderable } from "client/components"
 import { Position } from "shared/components"
 
-function moveRenderable(world: World) {
+function updateRenderable(world: World) {
 	for (const [id, posRec] of world.queryChanged(Position)) {
 		if (!posRec.new) continue
 
@@ -13,4 +13,4 @@ function moveRenderable(world: World) {
 	}
 }
 
-export = moveRenderable
+export = updateRenderable

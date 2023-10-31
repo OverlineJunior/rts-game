@@ -17,7 +17,7 @@ const units = ReplicatedStorage.assets.units
 export function makeUnitModel(unitKind: UnitKind) {
 	switch (unitKind) {
 		case "TestUnit":
-			return units.testUnit.Clone()
+			return units.testUnit
 		default:
 			error(`Invalid UnitKind "${unitKind}"`)
 	}

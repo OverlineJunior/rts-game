@@ -12,13 +12,13 @@ function inputGoal(world: World) {
 		if (input.UserInputType !== M1 || processed) continue
 
 		const mousePos = getMouseWorldPosition(100)
-		const goalPos = new Vector3(mousePos.X, 0, mousePos.Z)
+		const goal = new Vector3(mousePos.X, 0, mousePos.Z)
 		const clearGoals = !UserInputService.IsKeyDown(LSHIFT)
 
 		for (const [_, unit, owner] of world.query(Unit, Owner, Goals)) {
 			if (owner.player !== CLIENT) continue
 
-			unit.remotes.pushGoal.FireServer(goalPos)
+			unit.remotes.pushGoal.FireServer(goal)
 		}
 	}
 }

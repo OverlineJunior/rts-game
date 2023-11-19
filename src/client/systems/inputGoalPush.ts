@@ -5,22 +5,30 @@ import { getMouseWorldPosition } from "shared/mouse"
 
 const CLIENT = Players.LocalPlayer
 const M1 = Enum.UserInputType.MouseButton1
-const LSHIFT = Enum.KeyCode.LeftShift
 
-function inputGoal(world: World) {
+function inputGoalPush(world: World) {
 	for (const [_, input, processed] of useEvent(UserInputService, "InputEnded")) {
 		if (input.UserInputType !== M1 || processed) continue
 
 		const mousePos = getMouseWorldPosition(100)
 		const goal = new Vector3(mousePos.X, 0, mousePos.Z)
-		const clearGoals = !UserInputService.IsKeyDown(LSHIFT)
 
-		for (const [_, unit, owner] of world.query(Unit, Owner, Goals)) {
+		for (const [id, unit, owner, goals] of world.query(Unit, Owner, Goals)) {
 			if (owner.player !== CLIENT) continue
+
+			const newQueue = [...goals.queue]
+			newQueue.push(goal as Vector3)
+
+			world.insert(
+				id,
+				goals.patch({
+					queue: newQueue,
+				}),
+			)
 
 			unit.remotes.pushGoal.FireServer(goal)
 		}
 	}
 }
 
-export = inputGoal
+export = inputGoalPush

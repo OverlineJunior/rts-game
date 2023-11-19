@@ -18,7 +18,7 @@ function inputGoal(world: World) {
 		for (const [_, unit, owner] of world.query(Unit, Owner, Goals)) {
 			if (owner.player !== CLIENT) continue
 
-			unit.remotes.sendGoal.FireServer(goalPos, clearGoals)
+			unit.remotes.pushGoal.FireServer(goalPos)
 		}
 	}
 }

@@ -20,7 +20,6 @@ export function unitBundle(owner: Player, kind: UnitKind, speed: number) {
 			kind,
 			remotes: {
 				sendGoalPosition: makeRemoteEvent("sendGoalPosition"),
-				replicateGoalQueue: makeRemoteEvent("replicateGoalQueue"),
 			},
 		}),
 		Owner({ player: owner }),

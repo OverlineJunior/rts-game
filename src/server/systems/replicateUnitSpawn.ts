@@ -2,7 +2,7 @@ import { World } from "@rbxts/matter"
 import { Players } from "@rbxts/services"
 import { Replicated } from "server/components"
 import { spawnFor } from "server/entityReplication"
-import { GoalPositions, Owner, Position, Speed, Unit } from "shared/components"
+import { Goals, Owner, Position, Speed, Unit } from "shared/components"
 
 function replicateUnitSpawn(world: World) {
 	for (const [id, repl, unit, owner, pos, goals, speed] of world.query(
@@ -10,7 +10,7 @@ function replicateUnitSpawn(world: World) {
 		Unit,
 		Owner,
 		Position,
-		GoalPositions,
+		Goals,
 		Speed,
 	)) {
 		const clientsLeft = Players.GetPlayers().filter((c) => !repl.finishedFor.includes(c))

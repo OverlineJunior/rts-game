@@ -1,4 +1,4 @@
-import { Unit, Owner, Position, GoalPositions, Speed } from "shared/components"
+import { Unit, Owner, Position, Goals, Speed } from "shared/components"
 import { Replicated } from "./components"
 import { UnitKind } from "shared/components/unit"
 import Make from "@rbxts/make"
@@ -19,12 +19,12 @@ export function unitBundle(owner: Player, kind: UnitKind, speed: number) {
 		Unit({
 			kind,
 			remotes: {
-				sendGoalPosition: makeRemoteEvent("sendGoalPosition"),
+				sendGoal: makeRemoteEvent("sendGoal"),
 			},
 		}),
 		Owner({ player: owner }),
 		Position({ value: Vector3.zero }),
-		GoalPositions({ queue: [] }),
+		Goals({ queue: [] }),
 		Speed({ base: speed }),
 		Replicated({ finishedFor: [] }),
 	]

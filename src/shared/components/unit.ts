@@ -6,7 +6,7 @@ export type UnitKind = "TestUnit"
 export const Unit = component<{
 	kind: UnitKind
 	remotes: {
-		sendGoalPosition: RemoteEvent<(goalPosition: Vector3, clearGoals: boolean) => void>
+		sendGoal: RemoteEvent<(goal: Vector3, clearGoals: boolean) => void>
 	}
 }>("Unit")
 export type Unit = ReturnType<typeof Unit>

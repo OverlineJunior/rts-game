@@ -1,9 +1,9 @@
 import { World, useEvent } from "@rbxts/matter"
-import { GoalPositions, Owner, Unit } from "shared/components"
+import { Goals, Owner, Unit } from "shared/components"
 
 function receiveGoal(world: World) {
-	for (const [id, unit, owner, goals] of world.query(Unit, Owner, GoalPositions)) {
-		for (const [_, plr, goalPos, clearGoals] of useEvent(unit.remotes.sendGoalPosition, "OnServerEvent")) {
+	for (const [id, unit, owner, goals] of world.query(Unit, Owner, Goals)) {
+		for (const [_, plr, goalPos, clearGoals] of useEvent(unit.remotes.sendGoal, "OnServerEvent")) {
 			if (plr !== owner.player) continue
 
 			const newQueue = (clearGoals as boolean) ? [] : [...goals.queue]

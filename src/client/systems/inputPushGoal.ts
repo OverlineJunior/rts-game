@@ -6,7 +6,7 @@ import { getMouseWorldPosition } from "shared/mouse"
 const CLIENT = Players.LocalPlayer
 const M1 = Enum.UserInputType.MouseButton1
 
-function inputGoalPush(world: World) {
+function inputPushGoal(world: World) {
 	for (const [_, input, processed] of useEvent(UserInputService, "InputEnded")) {
 		if (input.UserInputType !== M1 || processed) continue
 
@@ -31,4 +31,4 @@ function inputGoalPush(world: World) {
 	}
 }
 
-export = inputGoalPush
+export = inputPushGoal

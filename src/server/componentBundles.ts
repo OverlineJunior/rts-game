@@ -20,6 +20,7 @@ export function unitBundle(owner: Player, kind: UnitKind, speed: number) {
 			kind,
 			remotes: {
 				pushGoal: makeRemoteEvent("pushGoal"),
+				clearGoals: makeRemoteEvent("clearGoals"),
 			},
 		}),
 		Owner({ player: owner }),

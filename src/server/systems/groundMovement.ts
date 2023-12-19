@@ -11,6 +11,7 @@ function getPosition(currPos: Vector3, goal: Vector3, speed: number) {
 }
 
 // ! This will be temporary until heightmap based movement is implemented.
+// Gradually moves Position towards the first goal, removing it from the queue when reached.
 function groundMovement(world: World) {
 	for (const [id, pos, goals, speed] of world.query(Position, Goals, Speed)) {
 		if (goals.queue.isEmpty()) continue

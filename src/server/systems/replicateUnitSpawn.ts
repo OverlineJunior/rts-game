@@ -4,6 +4,7 @@ import { Replicated } from "server/components"
 import { spawnFor } from "server/entityReplication"
 import { Goals, Owner, Position, Speed, Unit } from "shared/components"
 
+// Spawns the client version of the unit when Replicated is first added.
 function replicateUnitSpawn(world: World) {
 	for (const [id, repl, unit, owner, pos, goals, speed] of world.query(
 		Replicated,

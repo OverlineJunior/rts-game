@@ -9,7 +9,6 @@ const LSHIFT = Enum.KeyCode.LeftShift
 // Clears the goals on input and asks the server to do the same.
 function inputClearGoals(world: World) {
 	for (const [_, input, processed] of useEvent(UserInputService, "InputEnded")) {
-		// ! See if LSHIFT check is working.
 		if (input.UserInputType !== M1 || UserInputService.IsKeyDown(LSHIFT) || processed) continue
 
 		for (const [id, unit, owner, goals] of world.query(Unit, Owner, Goals)) {

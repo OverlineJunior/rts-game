@@ -6,7 +6,8 @@ import { Unit } from "shared/components"
 // Despawns the client version of the unit when it's no longer replicated.
 function replicateUnitDespawn(world: World) {
 	for (const [id, replRec] of world.queryChanged(Replicated)) {
-		if (!replRec.old || replRec.new || !world.get(id, Unit)) continue
+		const noUnit = world.contains(id) && !world.get(id, Unit)
+		if (!replRec.old || replRec.new || noUnit) continue
 
 		despawnFor(replRec.old.finishedFor, id)
 	}

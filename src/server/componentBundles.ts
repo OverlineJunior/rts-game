@@ -21,6 +21,7 @@ export function unitBundle(owner: Player, kind: UnitKind, speed: number) {
 			remotes: {
 				pushGoal: makeRemoteEvent("pushGoal"),
 				clearGoals: makeRemoteEvent("clearGoals"),
+				replicatePosition: makeRemoteEvent("replicatePosition"),
 			},
 		}),
 		Owner({ player: owner }),

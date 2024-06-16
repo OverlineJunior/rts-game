@@ -5,13 +5,15 @@ import { Owner, Position, Speed, Unit } from "shared/components"
 
 function spawnTestUnit(world: World) {
 	for (const [_, player] of useEvent(Players, "PlayerAdded")) {
-		world.spawn(
-			Unit({}),
-			Replicated({ finishedFor: [] }),
-			Owner({ player }),
-			Position({ value: Vector3.zero }),
-			Speed({ value: 10 }),
-		)
+		for (let i = 0; i < 100; i++) {
+			world.spawn(
+				Unit({}),
+				Replicated({ finishedFor: [] }),
+				Owner({ player }),
+				Position({ value: Vector3.zero }),
+				Speed({ value: 10 }),
+			)
+		}
 	}
 }
 

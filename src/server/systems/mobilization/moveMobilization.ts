@@ -4,7 +4,6 @@ import { Position, Speed } from "shared/components"
 
 // Returned position is clamped so it doesn't go past the goal.
 function getNextPosition(currPos: Vector3, goal: Vector3, speed: number): Vector3 {
-	print(goal, currPos)
 	const dt = useDeltaTime()
 	const dir = goal.sub(currPos).Unit
 	const dist = goal.sub(currPos).Magnitude

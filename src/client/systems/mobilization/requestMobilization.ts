@@ -16,7 +16,7 @@ function getServerIds(world: World, units: AnyEntity[]): AnyEntity[] {
 
 // TODO! Send actual mouse position as the goal.
 function getGoal(): Vector3 {
-	return new Vector3(math.random(-30, 30), 0, math.random(-30, 30))
+	return new Vector3(math.random(-100, 100), 0, math.random(-100, 100))
 }
 
 function requestMobilization(world: World, state: ClientState) {

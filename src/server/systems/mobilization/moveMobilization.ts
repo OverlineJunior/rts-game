@@ -1,4 +1,4 @@
-import { AnyEntity, World, useDeltaTime } from "@rbxts/matter"
+import { AnyEntity, World, useDeltaTime, useThrottle } from "@rbxts/matter"
 import { Mobilization } from "server/components"
 import { dequeueGoal } from "server/components/mobilization"
 import { Position, Speed } from "shared/components"
@@ -8,8 +8,8 @@ function getNextPosition(currPos: Vector3, goal: Vector3, speed: number): Vector
 	const dt = useDeltaTime()
 	const dir = goal.sub(currPos).Unit
 	const dist = goal.sub(currPos).Magnitude
-	const reachesGoal = dist <= speed * dt
-	const offset = dir.mul(speed * dt)
+	const reachesGoal = dist <= speed * 1
+	const offset = dir.mul(speed * 1)
 
 	return reachesGoal ? goal : currPos.add(offset)
 }
@@ -27,7 +27,14 @@ function move(unit: AnyEntity, goal: Vector3, world: World): Vector3 {
 
 function moveMobilization(world: World) {
 	for (const [mobId, mob] of world.query(Mobilization)) {
-		if (!world.contains(mob.leader) || mob.goalQueue.isEmpty()) continue
+		if (
+			!world.contains(mob.leader)
+			|| mob.goalQueue.isEmpty()
+			// TODO! When you make so the leader can bump into things, making the mob stop, you have to check if the next
+			// ! position is walkable per frame as usual, and only update the position every 1 second like now.
+			// ! This is because if you only check for walkability every 1s, the leader could skip through walls.
+			|| !useThrottle(1, mobId)
+		) continue
 
 		const currGoal = mob.goalQueue[0]
 		const leaderNewPos = move(mob.leader, currGoal, world)

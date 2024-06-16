@@ -1,15 +1,14 @@
 import { World } from "@rbxts/matter"
 import { Goal, Replica } from "client/components"
 import { Unit } from "shared/components"
-import { sendUnitPositions } from "shared/remotes"
+import { sendUnitPosition } from "shared/remotes"
 
 function receiveUnitPosition(world: World) {
-	sendUnitPositions.OnClientEvent.Connect(unitPositions => {
+	sendUnitPosition.OnClientEvent.Connect((serverId, unitPos) => {
 		for (const [id, repl] of world.query(Replica, Unit)) {
-			const goal = unitPositions.get(repl.serverId)
-			if (!goal) continue
+			if (repl.serverId !== serverId) continue
 
-			world.insert(id, Goal({ value: goal }))
+			world.insert(id, Goal({ value: unitPos }))
 		}
 	})
 }

@@ -4,6 +4,7 @@ import { Position, Speed } from "shared/components"
 
 // Returned position is clamped so it doesn't go past the goal.
 function getNextPosition(currPos: Vector3, goal: Vector3, speed: number): Vector3 {
+	print(goal, currPos)
 	const dt = useDeltaTime()
 	const dir = goal.sub(currPos).Unit
 	const dist = goal.sub(currPos).Magnitude
@@ -28,6 +29,8 @@ function moveMobilization(world: World) {
 	for (const [mobId, mob] of world.query(Mobilization)) {
 		mob.units.forEach(unit => {
 			const currGoal = mob.goalQueue[0]
+			if (!currGoal) return
+
 			const newPos = move(unit, currGoal, world)
 
 			if (newPos === currGoal) {

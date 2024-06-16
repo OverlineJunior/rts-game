@@ -1,5 +1,6 @@
 import { AnyEntity, World, useDeltaTime } from "@rbxts/matter"
 import { Mobilization } from "server/components"
+import { dequeueGoal } from "server/components/mobilization"
 import { Position, Speed } from "shared/components"
 
 // Returned position is clamped so it doesn't go past the goal.
@@ -13,7 +14,7 @@ function getNextPosition(currPos: Vector3, goal: Vector3, speed: number): Vector
 	return reachesGoal ? goal : currPos.add(offset)
 }
 
-// Returns the unit's new position.
+// Moves the unit and returns its new position.
 function move(unit: AnyEntity, goal: Vector3, world: World): Vector3 {
 	// No unit should be mobilized without a Position or Speed, so we panic.
 	const pos = world.get(unit, Position)!
@@ -26,19 +27,22 @@ function move(unit: AnyEntity, goal: Vector3, world: World): Vector3 {
 
 function moveMobilization(world: World) {
 	for (const [mobId, mob] of world.query(Mobilization)) {
+		if (!world.contains(mob.leader) || mob.goalQueue.isEmpty()) continue
+
+		const currGoal = mob.goalQueue[0]
+		const leaderNewPos = move(mob.leader, currGoal, world)
+
+		// TODO! For now, units snap to the leader's position. When we implement formations, this is probably where we'll do it.
 		mob.units.forEach(unit => {
-			const currGoal = mob.goalQueue[0]
-			if (!currGoal) return
+			if (!world.contains(unit)) return
 
-			const newPos = move(unit, currGoal, world)
-
-			if (newPos === currGoal) {
-				const goalQueue = mob.goalQueue
-				goalQueue.shift()
-
-				world.insert(mobId, mob.patch({ goalQueue }))
-			}
+			const pos = world.get(unit, Position)!
+			world.insert(unit, pos.patch({ value: leaderNewPos }))
 		})
+
+		if (leaderNewPos === currGoal) {
+			dequeueGoal(mobId, world)
+		}
 	}
 }
 

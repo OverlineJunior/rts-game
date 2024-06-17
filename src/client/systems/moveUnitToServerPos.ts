@@ -14,7 +14,7 @@ function getNextPosition(pos: Vector3, goal: Vector3, speed: number): Vector3 {
 	return reachesGoal ? goal : pos.add(offset)
 }
 
-function moveToGoal(world: World) {
+function moveUnitToServerPos(world: World) {
 	for (const [id, pos, serverPos, speed] of world.query(Position, ServerPosition, Speed)) {
 		world.insert(id, pos.patch({
 			value: getNextPosition(pos.value, serverPos.value, speed.value)
@@ -22,4 +22,4 @@ function moveToGoal(world: World) {
 	}
 }
 
-export = moveToGoal
+export = moveUnitToServerPos

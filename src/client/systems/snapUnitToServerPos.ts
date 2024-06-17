@@ -4,7 +4,7 @@ import { Position } from "shared/components"
 
 // If he server takes too long to send the new position, affected units would start moving behind the unaffected ones.
 // To remedy this, we snap the client position to the server one so the affected unit doesn't lag behind *too much*.
-function snapUnitToServer(world: World) {
+function snapUnitToServerPos(world: World) {
 	for (const [id, serverPos] of world.queryChanged(ServerPosition)) {
 		if (!serverPos.old || !world.contains(id) || !world.get(id, Position)) continue
 
@@ -13,4 +13,4 @@ function snapUnitToServer(world: World) {
 	}
 }
 
-export = snapUnitToServer
+export = snapUnitToServerPos

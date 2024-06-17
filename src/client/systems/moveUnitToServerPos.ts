@@ -2,8 +2,6 @@ import { World, useDeltaTime } from "@rbxts/matter"
 import { ServerPosition } from "client/components"
 import { Position, Speed } from "shared/components"
 
-// TODO! Fix the case where when a remote takes longer than usual to send the server position as goal, the affected
-// ! units move behind the unaffected ones. Enable latency simulation in `replicateUnitPosition.ts` to see this.
 function getNextPosition(pos: Vector3, goal: Vector3, speed: number): Vector3 {
 	const dt = useDeltaTime()
 	const dir = goal.sub(pos).Unit

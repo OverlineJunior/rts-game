@@ -16,8 +16,8 @@ function replicateUnitPosition(world: World) {
 		sendUnitPosition.FireAllClients(id, pos.new.value)
 
 		// Simulate extreme latency for testing purposes.
-		// if (math.random(0, 50) === 1) {
-		// 	task.delay(0.5, () => sendUnitPosition.FireAllClients(id, pos.new!.value))
+		// if (math.random(0, 125) === 1) {
+		// 	task.delay(0.25, () => sendUnitPosition.FireAllClients(id, pos.new!.value))
 		// } else {
 		// 	sendUnitPosition.FireAllClients(id, pos.new.value)
 		// }

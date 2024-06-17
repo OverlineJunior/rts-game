@@ -3,13 +3,16 @@ import { Mobilization } from "server/components"
 import { dequeueGoal } from "server/components/mobilization"
 import { Position, Speed } from "shared/components"
 
+// The time it takes for the unit positions to be updated.
+const UPDATE_INTERVAL_SECS = 1
+
 // Returned position is clamped so it doesn't go past the goal.
 function getNextPosition(currPos: Vector3, goal: Vector3, speed: number): Vector3 {
 	const dt = useDeltaTime()
 	const dir = goal.sub(currPos).Unit
 	const dist = goal.sub(currPos).Magnitude
-	const reachesGoal = dist <= speed * 1
-	const offset = dir.mul(speed * 1)
+	const reachesGoal = dist <= speed * UPDATE_INTERVAL_SECS
+	const offset = dir.mul(speed * UPDATE_INTERVAL_SECS)
 
 	return reachesGoal ? goal : currPos.add(offset)
 }
@@ -33,7 +36,7 @@ function moveMobilization(world: World) {
 			// TODO! When you make so the leader can bump into things, making the mob stop, you have to check if the next
 			// ! position is walkable per frame as usual, and only update the position every 1 second like now.
 			// ! This is because if you only check for walkability every 1s, the leader could skip through walls.
-			|| !useThrottle(1, mobId)
+			|| !useThrottle(UPDATE_INTERVAL_SECS, mobId)
 		) continue
 
 		const currGoal = mob.goalQueue[0]

@@ -1,5 +1,5 @@
 import { World, useDeltaTime } from "@rbxts/matter"
-import { Goal } from "client/components"
+import { ServerPosition } from "client/components"
 import { Position, Speed } from "shared/components"
 
 // TODO! Fix the case where when a remote takes longer than usual to send the server position as goal, the affected
@@ -15,9 +15,9 @@ function getNextPosition(pos: Vector3, goal: Vector3, speed: number): Vector3 {
 }
 
 function moveToGoal(world: World) {
-	for (const [id, pos, goal, speed] of world.query(Position, Goal, Speed)) {
+	for (const [id, pos, serverPos, speed] of world.query(Position, ServerPosition, Speed)) {
 		world.insert(id, pos.patch({
-			value: getNextPosition(pos.value, goal.value, speed.value)
+			value: getNextPosition(pos.value, serverPos.value, speed.value)
 		}))
 	}
 }

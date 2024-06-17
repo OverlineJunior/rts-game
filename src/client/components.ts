@@ -6,5 +6,5 @@ export type Replica = ReturnType<typeof Replica>
 export const Renderable = component<{ model: Model }>("Renderable")
 export type Renderable = ReturnType<typeof Renderable>
 
-export const Goal = component<{ value: Vector3 }>("Goal")
-export type Goal = ReturnType<typeof Goal>
+export const ServerPosition = component<{ value: Vector3 }>("ServerPosition")
+export type ServerPosition = ReturnType<typeof ServerPosition>

@@ -38,6 +38,13 @@ function snapUnitToServerPos(world: World) {
 		const pos = world.get(id, Position)!
 		world.insert(id, pos.patch({ value: serverPos.old.value }))
 	}
+
+	// No memory leaks in my house!
+	for (const [id, rec] of world.queryChanged(ServerPosition)) {
+		if (rec.new) continue
+
+		lastDirection.delete(id)
+	}
 }
 
 export = snapUnitToServerPos

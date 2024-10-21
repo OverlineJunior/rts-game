@@ -1,5 +1,5 @@
 {
-	"name": "rts-test",
+	"name": "rts-game",
 	"globIgnorePaths": [
 		"**/package.json",
 		"**/tsconfig.json"

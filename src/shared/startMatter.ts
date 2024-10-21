@@ -7,7 +7,11 @@ const DEBUGGER_AUTHORIZED_USER_IDS = [93428451]
 
 function makeDebugger() {
 	const debug = new Debugger(Plasma)
+<<<<<<< HEAD
 	debug.authorize = (plr) => DEBUGGER_AUTHORIZED_USER_IDS.includes(plr.UserId)
+=======
+	debug.authorize = plr => DEBUGGER_AUTHORIZED_USER_IDS.includes(plr.UserId)
+>>>>>>> remake
 
 	if (RunService.IsClient()) {
 		UserInputService.InputBegan.Connect((input, processed) => {
@@ -27,9 +31,16 @@ function startMatter<S extends object>(containers: Array<Folder>, state: S) {
 	const systems = new Array<SystemFn<[World, S]>>()
 
 	debug.autoInitialize(loop)
+<<<<<<< HEAD
 
 	containers.forEach((container) =>
 		container.GetDescendants().forEach((mod) => {
+=======
+	debug.loopParameterNames = ["World", "State", "Widgets"]
+
+	containers.forEach((container) =>
+		container.GetDescendants().forEach(mod => {
+>>>>>>> remake
 			if (!mod.IsA("ModuleScript")) return
 
 			systems.push(require(mod) as SystemFn<[World, S]>)

@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 /node_modules
 /out
 /include
 *.tsbuildinfo
+=======
+include
+node_modules
+out
+package-lock.json
+>>>>>>> remake

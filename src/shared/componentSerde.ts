@@ -18,21 +18,33 @@ function findComponentCtor(name: string) {
 	}
 }
 
+<<<<<<< HEAD
 export function serializeComponents(comps: Array<AnyComponent>) {
+=======
+export function serializeComponents(comps: Array<AnyComponent>): SerializedComponents {
+>>>>>>> remake
 	const ser: SerializedComponents = new Map()
 	comps.forEach((c) => ser.set(getComponentName(c), c))
 
 	return ser
 }
 
+<<<<<<< HEAD
 export function deserializeComponents(serializedComps: SerializedComponents) {
+=======
+export function deserializeComponents(serializedComps: SerializedComponents): AnyComponent[] {
+>>>>>>> remake
 	const comps: Array<AnyComponent> = new Array()
 
 	serializedComps.forEach((data, name) => {
 		const ctor = findComponentCtor(name)
 		assert(
 			ctor,
+<<<<<<< HEAD
 			`Could not find a component named "${name}" on either of the client or shared sides. This is likely a bug`,
+=======
+			`Could not find a component named "${name}" on either of the client or shared sides`,
+>>>>>>> remake
 		)
 
 		comps.push(ctor(data))

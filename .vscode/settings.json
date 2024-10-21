@@ -10,6 +10,10 @@
 		"editor.formatOnSave": true
 	},
 	"eslint.run": "onType",
+<<<<<<< HEAD
 	"eslint.format.enable": true,
 	"typescript.format.semicolons": "remove"
+=======
+	"eslint.format.enable": true
+>>>>>>> remake
 }

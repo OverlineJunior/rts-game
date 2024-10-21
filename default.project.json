@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
 	"name": "rts-game",
+=======
+	"name": "rts-test",
+>>>>>>> remake
 	"globIgnorePaths": [
 		"**/package.json",
 		"**/tsconfig.json"

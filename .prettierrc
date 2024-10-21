@@ -2,6 +2,10 @@
 	"printWidth": 120,
 	"tabWidth": 4,
 	"trailingComma": "all",
+<<<<<<< HEAD
 	"useTabs": true,
 	"semi": false
+=======
+	"useTabs": true
+>>>>>>> remake
 }

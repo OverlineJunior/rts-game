@@ -6,7 +6,7 @@ import { canMobilize } from "shared/mobilization"
 import { getMouseWorldPosition } from "shared/mouse"
 import { requestMobilization as reqMobilization } from "shared/remotes"
 
-const M2 = Enum.UserInputType.MouseButton2
+const MOBILIZE_BUTTON = Enum.UserInputType.MouseButton1
 
 // Selected units that are no longer valid or don't have Replica are discarded.
 function getServerIds(world: World, units: AnyEntity[]): AnyEntity[] {
@@ -21,7 +21,7 @@ function getGoal(): Vector3 {
 
 function requestMobilization(world: World, state: ClientState) {
 	for (const [_, input, ui] of useEvent(UserInputService, "InputBegan")) {
-		if (ui || input.UserInputType !== M2) continue
+		if (ui || input.UserInputType !== MOBILIZE_BUTTON) continue
 
 		const mobilizables = state.selection.units.filter(id => canMobilize(id, world))
 		const serverUnitIds = getServerIds(world, mobilizables)

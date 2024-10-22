@@ -1,5 +1,5 @@
 import { World } from "@rbxts/matter"
-import { Renderable } from "client/components"
+import { Renderable } from "./components"
 
 function destroyRender(world: World) {
 	for (const [_, renderRec] of world.queryChanged(Renderable)) {

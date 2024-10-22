@@ -1,6 +1,7 @@
 import { AnyEntity, World } from "@rbxts/matter"
-import { deserializeComponents } from "shared/componentSerde"
-import { despawnOnClient, spawnOnClient } from "shared/remotes"
+import { deserializeComponents } from "game/shared/componentSerde"
+import { spawnOnClient, despawnOnClient } from "game/shared/remotes"
+
 
 const serverToClientId: Map<number, number> = new Map()
 

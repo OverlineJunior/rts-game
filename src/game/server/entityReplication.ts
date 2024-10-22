@@ -1,7 +1,7 @@
 import { AnyEntity } from "@rbxts/matter"
 import { AnyComponent } from "@rbxts/matter/lib/component"
-import { serializeComponents } from "shared/componentSerde"
-import { despawnOnClient, spawnOnClient } from "shared/remotes"
+import { serializeComponents } from "game/shared/componentSerde"
+import { spawnOnClient, despawnOnClient } from "game/shared/remotes"
 
 const registeredIds: Array<number> = new Array()
 

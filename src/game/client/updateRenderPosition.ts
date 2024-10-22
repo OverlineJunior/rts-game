@@ -1,6 +1,6 @@
 import { World } from "@rbxts/matter"
-import { Renderable } from "client/components"
-import { Position } from "shared/components"
+import { Position } from "game/shared/components"
+import { Renderable } from "./components"
 
 function updateRenderPosition(world: World) {
 	for (const [id, posRec] of world.queryChanged(Position)) {

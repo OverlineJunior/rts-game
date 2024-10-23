@@ -1,7 +1,7 @@
 import { AnyEntity, World } from "@rbxts/matter"
-import { ServerPosition } from "client/components"
-import { Position } from "shared/components"
-import { fuzzyEqual } from "shared/vector3"
+import { ServerPosition } from "game/client/components"
+import { Position } from "game/shared/components"
+import { fuzzyEqual } from "game/shared/vector3"
 
 const lastDirection = new Map<number, Vector3>()
 

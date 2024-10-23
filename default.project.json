@@ -8,8 +8,20 @@
 		"$className": "DataModel",
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
-			"server": {
-				"$path": "out/server"
+			"game": {
+				"$path": "out/game/server"
+			},
+			"mobilization": {
+				"$path": "out/mobilization/server"
+			},
+			"unit": {
+				"$path": "out/unit/server",
+				"replication": {
+					"$path": "out/unit/replication/server"
+				},
+				"selection": {
+					"$path": "out/unit/selection/server"
+				}
 			}
 		},
 		"ReplicatedStorage": {
@@ -24,10 +36,40 @@
 				}
 			},
 			"client": {
-				"$path": "out/client"
+				"$className": "Folder",
+				"game": {
+					"$path": "out/game/client"
+				},
+				"mobilization": {
+					"$path": "out/mobilization/client"
+				},
+				"unit": {
+					"$path": "out/unit/client",
+					"replication": {
+						"$path": "out/unit/replication/client"
+					},
+					"selection": {
+						"$path": "out/unit/selection/client"
+					}
+				}
 			},
 			"shared": {
-				"$path": "out/shared"
+				"$className": "Folder",
+				"game": {
+					"$path": "out/game/shared"
+				},
+				"mobilization": {
+					"$path": "out/mobilization/shared"
+				},
+				"unit": {
+					"$path": "out/unit/shared",
+					"replication": {
+						"$path": "out/unit/replication/shared"
+					},
+					"selection": {
+						"$path": "out/unit/selection/shared"
+					}
+				}
 			}
 		},
 		"StarterPlayer": {
@@ -35,26 +77,8 @@
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
 				"main": {
-					"$path": "out/client/main.client.luau"
+					"$path": "out/game/client/main.client.luau"
 				}
-			}
-		},
-		"Workspace": {
-			"$className": "Workspace",
-			"$properties": {
-				"FilteringEnabled": true
-			}
-		},
-		"HttpService": {
-			"$className": "HttpService",
-			"$properties": {
-				"HttpEnabled": true
-			}
-		},
-		"SoundService": {
-			"$className": "SoundService",
-			"$properties": {
-				"RespectFilteringEnabled": true
 			}
 		}
 	}

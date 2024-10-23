@@ -1,5 +1,5 @@
 import { AnyEntity, Entity, World } from "@rbxts/matter"
-import { Mobilization } from "./components"
+import { Mobilization } from "game/server/components"
 
 /**
  * Spawns a new mobilization with the given goal and units, where one of them will be the leader.

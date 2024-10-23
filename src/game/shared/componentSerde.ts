@@ -1,6 +1,6 @@
 import { AnyComponent } from "@rbxts/matter"
-import * as ClientComponents from "client/components"
-import * as SharedComponents from "shared/components"
+import * as ClientComponents from "game/client/components"
+import * as SharedComponents from "game/shared/components"
 
 export type SerializedComponents = Map<string, AnyComponent>
 

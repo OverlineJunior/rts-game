@@ -1,7 +1,7 @@
 import { AnyEntity, World, useEvent } from "@rbxts/matter"
 import { Players, UserInputService } from "@rbxts/services"
-import { ClientState } from "client/clientState"
-import { Owner, Unit } from "shared/components"
+import { ClientState } from "game/client/clientState"
+import { Owner, Unit } from "game/shared/components"
 
 const CLIENT = Players.LocalPlayer
 const M1 = Enum.UserInputType.MouseButton1

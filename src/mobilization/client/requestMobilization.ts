@@ -1,10 +1,10 @@
 import { AnyEntity, World, useEvent } from "@rbxts/matter"
 import { UserInputService } from "@rbxts/services"
-import { ClientState } from "client/clientState"
-import { Replica } from "client/components"
-import { canMobilize } from "shared/mobilization"
-import { getMouseWorldPosition } from "shared/mouse"
-import { requestMobilization as reqMobilization } from "shared/remotes"
+import { ClientState } from "game/client/clientState"
+import { Replica } from "game/client/components"
+import { getMouseWorldPosition } from "game/shared/mouse"
+import { canMobilize } from "mobilization/shared/mobilization"
+import { requestMobilization as reqMobilization } from "game/shared/remotes"
 
 const MOBILIZE_BUTTON = Enum.UserInputType.MouseButton1
 
@@ -22,7 +22,6 @@ function getGoal(): Vector3 {
 function requestMobilization(world: World, state: ClientState) {
 	for (const [_, input, ui] of useEvent(UserInputService, "InputBegan")) {
 		if (ui || input.UserInputType !== MOBILIZE_BUTTON) continue
-
 		const mobilizables = state.selection.units.filter(id => canMobilize(id, world))
 		const serverUnitIds = getServerIds(world, mobilizables)
 		if (serverUnitIds.isEmpty()) continue

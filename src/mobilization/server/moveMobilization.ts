@@ -1,7 +1,7 @@
 import { AnyEntity, World, useDeltaTime, useThrottle } from "@rbxts/matter"
-import { Mobilization } from "server/components"
-import { dequeueGoal } from "server/components/mobilization"
-import { Position, Speed } from "shared/components"
+import { Mobilization } from "game/server/components"
+import { Position, Speed } from "game/shared/components"
+import { dequeueGoal } from "./mobilization"
 
 // The time it takes for the unit positions to be updated.
 const UPDATE_INTERVAL_SECS = 1

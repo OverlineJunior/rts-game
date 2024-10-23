@@ -1,6 +1,6 @@
 import { World } from "@rbxts/matter"
-import { ClientState } from "client/clientState"
-import { Unit } from "shared/components"
+import { ClientState } from "game/client/clientState"
+import { Unit } from "game/shared/components"
 
 function deselectDespawnedUnits(world: World, state: ClientState) {
 	for (const [id, unitRec] of world.queryChanged(Unit)) {

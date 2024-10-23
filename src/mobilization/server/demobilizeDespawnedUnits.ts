@@ -1,6 +1,6 @@
 import { World } from "@rbxts/matter"
-import { demobilize } from "server/components/mobilization"
-import { Unit } from "shared/components"
+import { Unit } from "game/shared/components"
+import { demobilize } from "./mobilization"
 
 function deselectDespawnedUnits(world: World) {
 	for (const [id, unitRec] of world.queryChanged(Unit)) {

@@ -1,7 +1,7 @@
 import { World, useEvent } from "@rbxts/matter"
 import { Players } from "@rbxts/services"
-import { Replicated } from "server/components"
-import { Owner, Position, Speed, Unit } from "shared/components"
+import { Replicated } from "game/server/components"
+import { Unit, Owner, Position, Speed } from "game/shared/components"
 
 function spawnTestUnit(world: World) {
 	for (const [_, player] of useEvent(Players, "PlayerAdded")) {

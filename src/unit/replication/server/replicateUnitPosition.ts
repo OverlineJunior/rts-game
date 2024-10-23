@@ -1,6 +1,6 @@
 import { World } from "@rbxts/matter"
-import { Position, Unit } from "shared/components"
-import { sendUnitPosition } from "shared/remotes"
+import { Position, Unit } from "game/shared/components"
+import { sendUnitPosition } from "game/shared/remotes"
 
 // TODO! You can optimize this by making `sendUnitPosition` an UnreliableRemoteEvent.
 // ! If you do this, remember that those can fail. A way to handle that is firing unreliably as usual,

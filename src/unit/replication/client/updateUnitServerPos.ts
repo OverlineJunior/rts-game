@@ -1,7 +1,7 @@
 import { World } from "@rbxts/matter"
-import { ServerPosition, Replica } from "client/components"
-import { Unit } from "shared/components"
-import { sendUnitPosition } from "shared/remotes"
+import { Replica, ServerPosition } from "game/client/components"
+import { Unit } from "game/shared/components"
+import { sendUnitPosition } from "game/shared/remotes"
 
 function updateUnitServerPos(world: World) {
 	sendUnitPosition.OnClientEvent.Connect((serverId, unitPos) => {

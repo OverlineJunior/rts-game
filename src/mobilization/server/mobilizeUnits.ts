@@ -1,9 +1,9 @@
 import { AnyEntity, World } from "@rbxts/matter"
 import { t } from "@rbxts/t"
-import { spawnMobilization } from "server/components/mobilization"
-import { Owner } from "shared/components"
-import { canMobilize } from "shared/mobilization"
-import { requestMobilization } from "shared/remotes"
+import { Owner } from "game/shared/components"
+import { requestMobilization } from "game/shared/remotes"
+import { canMobilize } from "mobilization/shared/mobilization"
+import { spawnMobilization } from "./mobilization"
 
 function areUnitsValid(ids: AnyEntity[], sender: Player, world: World): boolean {
 	return !ids.isEmpty() && ids.every(id => {

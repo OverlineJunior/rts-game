@@ -1,7 +1,7 @@
 import { World } from "@rbxts/matter"
 import { Workspace } from "@rbxts/services"
-import { Renderable } from "client/components"
-import { Unit } from "shared/components"
+import { Renderable } from "game/client/components"
+import { Unit } from "game/shared/components"
 
 // TODO! Should clone the unit's prefab model based on its kind.
 function getTemporaryModel(): Model {

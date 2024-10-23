@@ -1,6 +1,6 @@
 import { World } from "@rbxts/matter"
-import { Replicated } from "server/components"
-import { despawnFor } from "server/entityReplication"
+import { Replicated } from "game/server/components"
+import { despawnFor } from "game/server/entityReplication"
 
 // Server units that are despawned or have their Replicated removed have their
 // replicas despawned for each client they were spawned for.

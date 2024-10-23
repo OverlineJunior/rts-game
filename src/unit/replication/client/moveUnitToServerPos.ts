@@ -1,6 +1,6 @@
 import { World, useDeltaTime } from "@rbxts/matter"
-import { ServerPosition } from "client/components"
-import { Position, Speed } from "shared/components"
+import { ServerPosition } from "game/client/components"
+import { Position, Speed } from "game/shared/components"
 
 function getNextPosition(pos: Vector3, goal: Vector3, speed: number): Vector3 {
 	const dt = useDeltaTime()

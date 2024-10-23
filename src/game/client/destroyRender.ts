@@ -1,5 +1,6 @@
 import { World } from "@rbxts/matter"
 import { Renderable } from "./components"
+import { System } from "game/shared/bootstrap"
 
 function destroyRender(world: World) {
 	for (const [_, renderRec] of world.queryChanged(Renderable)) {
@@ -9,4 +10,4 @@ function destroyRender(world: World) {
 	}
 }
 
-export = destroyRender
+export = new System(destroyRender)

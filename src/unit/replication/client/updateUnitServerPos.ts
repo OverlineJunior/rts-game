@@ -1,5 +1,6 @@
 import { World } from "@rbxts/matter"
 import { Replica, ServerPosition } from "game/client/components"
+import { System } from "game/shared/bootstrap"
 import { Unit } from "game/shared/components"
 import { sendUnitPosition } from "game/shared/remotes"
 
@@ -13,4 +14,4 @@ function updateUnitServerPos(world: World) {
 	})
 }
 
-export = updateUnitServerPos
+export = new System(updateUnitServerPos, { type: "onStartup" })

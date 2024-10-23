@@ -3,6 +3,7 @@ import { Players } from "@rbxts/services"
 import { Replica } from "game/client/components"
 import { Replicated } from "game/server/components"
 import { spawnFor } from "game/server/entityReplication"
+import { System } from "game/shared/bootstrap"
 import { Owner, Position, Speed, Unit } from "game/shared/components"
 
 // If an unit has any of these components, they will be replicated to the clients.
@@ -36,4 +37,4 @@ function replicateUnitSpawn(world: World) {
 	}
 }
 
-export = replicateUnitSpawn
+export = new System(replicateUnitSpawn)

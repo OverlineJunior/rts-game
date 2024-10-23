@@ -1,6 +1,7 @@
 import { World } from "@rbxts/matter"
 import { Position } from "game/shared/components"
 import { Renderable } from "./components"
+import { System } from "game/shared/bootstrap"
 
 function updateRenderPosition(world: World) {
 	for (const [id, posRec] of world.queryChanged(Position)) {
@@ -12,4 +13,4 @@ function updateRenderPosition(world: World) {
 	}
 }
 
-export = updateRenderPosition
+export = new System(updateRenderPosition)

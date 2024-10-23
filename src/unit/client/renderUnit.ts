@@ -1,6 +1,7 @@
 import { World } from "@rbxts/matter"
 import { Workspace } from "@rbxts/services"
 import { Renderable } from "game/client/components"
+import { System } from "game/shared/bootstrap"
 import { Unit } from "game/shared/components"
 
 // TODO! Should clone the unit's prefab model based on its kind.
@@ -28,4 +29,4 @@ function renderUnit(world: World) {
 	}
 }
 
-export = renderUnit
+export = new System(renderUnit)

@@ -1,11 +1,8 @@
 import { ReplicatedStorage, ServerScriptService } from "@rbxts/services"
-import startInits from "game/shared/startInits"
-import startMatter from "game/shared/startMatter"
+import { runGame } from "game/shared/bootstrap"
 
-const systems = [ServerScriptService.server.systems, ReplicatedStorage.shared.systems]
-const inits = [ServerScriptService.server.inits]
+const systems = [ServerScriptService.server, ReplicatedStorage.shared]
 
 const state = {}
 
-const world = startMatter(systems, state)
-startInits(inits, world, state)
+const world = runGame(systems, state)

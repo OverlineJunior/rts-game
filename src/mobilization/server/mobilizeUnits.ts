@@ -4,6 +4,7 @@ import { Owner } from "game/shared/components"
 import { requestMobilization } from "game/shared/remotes"
 import { canMobilize } from "mobilization/shared/mobilization"
 import { spawnMobilization } from "./mobilization"
+import { System } from "game/shared/bootstrap"
 
 function areUnitsValid(ids: AnyEntity[], sender: Player, world: World): boolean {
 	return !ids.isEmpty() && ids.every(id => {
@@ -24,4 +25,4 @@ function mobilizeUnits(world: World) {
 	})
 }
 
-export = mobilizeUnits
+export = new System(mobilizeUnits, { type: "onStartup" })

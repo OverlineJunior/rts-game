@@ -1,17 +1,8 @@
 interface ServerScriptService extends Instance {
-	server: Folder & {
-		systems: Folder
-		inits: Folder
-	}
+	server: Folder
 }
 
 interface ReplicatedStorage extends Instance {
-	client: Folder & {
-		systems: Folder
-		inits: Folder
-	}
-
-	shared: Folder & {
-		systems: Folder
-	}
+	client: Folder
+	shared: Folder
 }

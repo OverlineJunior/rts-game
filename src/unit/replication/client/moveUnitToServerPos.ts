@@ -1,5 +1,6 @@
 import { World, useDeltaTime } from "@rbxts/matter"
 import { ServerPosition } from "game/client/components"
+import { System } from "game/shared/bootstrap"
 import { Position, Speed } from "game/shared/components"
 
 function getNextPosition(pos: Vector3, goal: Vector3, speed: number): Vector3 {
@@ -20,4 +21,4 @@ function moveUnitToServerPos(world: World) {
 	}
 }
 
-export = moveUnitToServerPos
+export = new System(moveUnitToServerPos)

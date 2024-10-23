@@ -1,5 +1,6 @@
 import { World } from "@rbxts/matter"
 import { ClientState } from "game/client/clientState"
+import { System } from "game/shared/bootstrap"
 import { Unit } from "game/shared/components"
 
 function deselectDespawnedUnits(world: World, state: ClientState) {
@@ -12,8 +13,5 @@ function deselectDespawnedUnits(world: World, state: ClientState) {
 	}
 }
 
-export = {
-	system: deselectDespawnedUnits,
-	// Run first. Does not guarantee the unit IDs are valid.
-	priority: -math.huge,
-}
+// Runs first, but does not guarantee the unit IDs are valid.
+export = new System(deselectDespawnedUnits, { priority: -math.huge })

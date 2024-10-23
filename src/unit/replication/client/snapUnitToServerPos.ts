@@ -1,5 +1,6 @@
 import { AnyEntity, World } from "@rbxts/matter"
 import { ServerPosition } from "game/client/components"
+import { System } from "game/shared/bootstrap"
 import { Position } from "game/shared/components"
 import { fuzzyEqual } from "game/shared/vector3"
 
@@ -47,4 +48,4 @@ function snapUnitToServerPos(world: World) {
 	}
 }
 
-export = snapUnitToServerPos
+export = new System(snapUnitToServerPos)

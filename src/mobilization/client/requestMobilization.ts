@@ -5,6 +5,7 @@ import { Replica } from "game/client/components"
 import { getMouseWorldPosition } from "game/shared/mouse"
 import { canMobilize } from "mobilization/shared/mobilization"
 import { requestMobilization as reqMobilization } from "game/shared/remotes"
+import { System } from "game/shared/bootstrap"
 
 const MOBILIZE_BUTTON = Enum.UserInputType.MouseButton1
 
@@ -30,4 +31,4 @@ function requestMobilization(world: World, state: ClientState) {
 	}
 }
 
-export = requestMobilization
+export = new System(requestMobilization)

@@ -8,19 +8,22 @@
 		"$className": "DataModel",
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
-			"game": {
-				"$path": "out/game/server"
-			},
-			"mobilization": {
-				"$path": "out/mobilization/server"
-			},
-			"unit": {
-				"$path": "out/unit/server",
-				"replication": {
-					"$path": "out/unit/replication/server"
+			"server": {
+				"$className": "Folder",
+				"game": {
+					"$path": "out/game/server"
 				},
-				"selection": {
-					"$path": "out/unit/selection/server"
+				"mobilization": {
+					"$path": "out/mobilization/server"
+				},
+				"unit": {
+					"$path": "out/unit/server",
+					"replication": {
+						"$path": "out/unit/replication/server"
+					},
+					"selection": {
+						"$path": "out/unit/selection/server"
+					}
 				}
 			}
 		},

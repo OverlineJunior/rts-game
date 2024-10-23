@@ -1,4 +1,5 @@
 import { World } from "@rbxts/matter"
+import { System } from "game/shared/bootstrap"
 import { Position, Unit } from "game/shared/components"
 import { sendUnitPosition } from "game/shared/remotes"
 
@@ -24,4 +25,4 @@ function replicateUnitPosition(world: World) {
 	}
 }
 
-export = replicateUnitPosition
+export = new System(replicateUnitPosition)

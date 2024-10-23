@@ -1,7 +1,7 @@
 import { AnyEntity, World } from "@rbxts/matter"
+import { System } from "game/shared/bootstrap"
 import { deserializeComponents } from "game/shared/componentSerde"
 import { spawnOnClient, despawnOnClient } from "game/shared/remotes"
-
 
 const serverToClientId: Map<number, number> = new Map()
 
@@ -23,4 +23,4 @@ function receiveEntityReplication(world: World) {
 	})
 }
 
-export = receiveEntityReplication
+export = new System(receiveEntityReplication, { type: "onStartup" })

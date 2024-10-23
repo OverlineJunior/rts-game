@@ -1,6 +1,7 @@
 import { World } from "@rbxts/matter"
 import { Replicated } from "game/server/components"
 import { despawnFor } from "game/server/entityReplication"
+import { System } from "game/shared/bootstrap"
 
 // Server units that are despawned or have their Replicated removed have their
 // replicas despawned for each client they were spawned for.
@@ -12,4 +13,4 @@ function replicateUnitDespawn(world: World) {
 	}
 }
 
-export = replicateUnitDespawn
+export = new System(replicateUnitDespawn)

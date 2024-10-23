@@ -1,6 +1,7 @@
 import { AnyEntity, World, useEvent } from "@rbxts/matter"
 import { Players, UserInputService } from "@rbxts/services"
 import { ClientState } from "game/client/clientState"
+import { System } from "game/shared/bootstrap"
 import { Owner, Unit } from "game/shared/components"
 
 const CLIENT = Players.LocalPlayer
@@ -26,4 +27,4 @@ function selectUnits(world: World, state: ClientState) {
 	}
 }
 
-export = selectUnits
+export = new System(selectUnits)

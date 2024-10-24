@@ -1,4 +1,4 @@
-import { component, Entity } from "@rbxts/matter"
+import { AnyEntity, component } from "@rbxts/matter"
 import Queue from "./queue"
 
 export const Unit = component("Unit")
@@ -22,5 +22,5 @@ export type Squad = ReturnType<typeof Squad>
 /**
  * Associates an entity with a Squad (usually an Unit).
  */
-export const SquadMember = component<{ squad: Entity<Squad> }>("SquadMember")
+export const SquadMember = component<{ squad: AnyEntity }>("SquadMember")
 export type SquadMember = ReturnType<typeof SquadMember>

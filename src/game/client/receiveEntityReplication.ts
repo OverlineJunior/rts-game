@@ -7,6 +7,7 @@ const serverToClientId: Map<number, number> = new Map()
 
 function receiveEntityReplication(world: World) {
 	spawnOnClient.OnClientEvent.Connect((serverId, serializedComponents) => {
+		// TODO! Should always insert a Replica component.
 		const clientId = world.spawn(...deserializeComponents(serializedComponents))
 		serverToClientId.set(serverId, clientId)
 	})

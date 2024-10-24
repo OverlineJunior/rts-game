@@ -3,9 +3,9 @@ import { UserInputService } from "@rbxts/services"
 import { ClientState } from "game/client/clientState"
 import { Replica } from "game/client/components"
 import { getMouseWorldPosition } from "game/shared/mouse"
-import { canMobilize } from "mobilization/shared/mobilization"
-import { requestMobilization as reqMobilization } from "game/shared/remotes"
+import { requestSquad as reqSquad } from "game/shared/remotes"
 import { System } from "game/shared/bootstrap"
+import { canBeInSquad } from "squad/shared/squadUtil"
 
 const MOBILIZE_BUTTON = Enum.UserInputType.MouseButton1
 
@@ -20,15 +20,15 @@ function getGoal(): Vector3 {
 	return getMouseWorldPosition(100)
 }
 
-function requestMobilization(world: World, state: ClientState) {
+function requestSquad(world: World, state: ClientState) {
 	for (const [_, input, ui] of useEvent(UserInputService, "InputBegan")) {
 		if (ui || input.UserInputType !== MOBILIZE_BUTTON) continue
-		const mobilizables = state.selection.units.filter(id => canMobilize(id, world))
-		const serverUnitIds = getServerIds(world, mobilizables)
+		const validUnits = state.selection.units.filter(id => canBeInSquad(id, world))
+		const serverUnitIds = getServerIds(world, validUnits)
 		if (serverUnitIds.isEmpty()) continue
 
-		reqMobilization.FireServer(serverUnitIds, getGoal())
+		reqSquad.FireServer(serverUnitIds, getGoal())
 	}
 }
 
-export = new System(requestMobilization)
+export = new System(requestSquad)

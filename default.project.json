@@ -13,8 +13,8 @@
 				"game": {
 					"$path": "out/game/server"
 				},
-				"mobilization": {
-					"$path": "out/mobilization/server"
+				"squad": {
+					"$path": "out/squad/server"
 				},
 				"unit": {
 					"$path": "out/unit/server",
@@ -43,8 +43,8 @@
 				"game": {
 					"$path": "out/game/client"
 				},
-				"mobilization": {
-					"$path": "out/mobilization/client"
+				"squad": {
+					"$path": "out/squad/client"
 				},
 				"unit": {
 					"$path": "out/unit/client",
@@ -61,8 +61,8 @@
 				"game": {
 					"$path": "out/game/shared"
 				},
-				"mobilization": {
-					"$path": "out/mobilization/shared"
+				"squad": {
+					"$path": "out/squad/shared"
 				},
 				"unit": {
 					"$path": "out/unit/shared",

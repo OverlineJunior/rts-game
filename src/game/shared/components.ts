@@ -14,10 +14,13 @@ export const Speed = component<{ value: number }>("Speed")
 export type Speed = ReturnType<typeof Speed>
 
 /**
- * A Squad is a path towards a goal shared by multiple units.
+ * A Squad is a path towards 1+ goals.
  */
 export const Squad = component<{ goals: Queue<Vector3> }>("Squad")
 export type Squad = ReturnType<typeof Squad>
 
+/**
+ * Associates an entity with a Squad (usually an Unit).
+ */
 export const SquadMember = component<{ squad: Entity<Squad> }>("SquadMember")
 export type SquadMember = ReturnType<typeof SquadMember>

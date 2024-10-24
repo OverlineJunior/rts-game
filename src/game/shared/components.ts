@@ -1,5 +1,5 @@
 import { component, Entity } from "@rbxts/matter"
-import Queue from "yocto-queue"
+import Queue from "./queue"
 
 export const Unit = component("Unit")
 export type Unit = ReturnType<typeof Unit>

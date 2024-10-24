@@ -28,7 +28,6 @@
     "@rbxts/matter": "^0.8.5",
     "@rbxts/plasma": "0.4.5",
     "@rbxts/services": "^1.5.5",
-    "@rbxts/t": "^3.1.1",
-    "yocto-queue": "^1.1.1"
+    "@rbxts/t": "^3.1.1"
   }
 }

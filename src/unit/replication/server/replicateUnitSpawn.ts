@@ -16,8 +16,10 @@ function getReplicatedComponents(world: World, id: AnyEntity): AnyComponent[] {
 
 // Server units with Replicated are spawned on each client, old or new.
 function replicateUnitSpawn(world: World) {
+	const players = Players.GetPlayers()
+
 	for (const [id, repl, unit] of world.query(Replicated, Unit)) {
-		const clientsLeft = Players.GetPlayers().filter((c) => !repl.finishedFor.includes(c))
+		const clientsLeft = players.filter(p => !repl.finishedFor.includes(p))
 		if (clientsLeft.isEmpty()) continue
 
 		spawnFor(

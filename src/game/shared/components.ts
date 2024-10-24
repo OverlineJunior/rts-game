@@ -1,4 +1,4 @@
-import { component } from "@rbxts/matter"
+import { AnyEntity, component } from "@rbxts/matter"
 
 export const Unit = component("Unit")
 export type Unit = ReturnType<typeof Unit>
@@ -11,3 +11,9 @@ export type Position = ReturnType<typeof Position>
 
 export const Speed = component<{ value: number }>("Speed")
 export type Speed = ReturnType<typeof Speed>
+
+/**
+ * A Squad is a path towards a goal shared by multiple units.
+ */
+export const Squad = component<{ goalQueue: [Vector3] }>("Squad")
+export type Squad = ReturnType<typeof Squad>

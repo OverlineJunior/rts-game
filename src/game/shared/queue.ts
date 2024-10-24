@@ -1,4 +1,4 @@
-class Queue<T> {
+class Queue<T extends defined> {
     private items: T[]
 
 	constructor(...items: T[]) {
@@ -6,12 +6,12 @@ class Queue<T> {
     }
 
     enqueue(item: T): Queue<T> {
-        return new Queue(...this.items, item)
+        const newItems = [...this.items, item]
+        return new Queue(...newItems)
     }
 
     dequeue(): Queue<T> {
-		const [, ...newItems] = this.items || []
-		return new Queue(...newItems)
+		return new Queue(...this.items.filter((_, i) => i !== 0))
     }
 
     isEmpty(): boolean {

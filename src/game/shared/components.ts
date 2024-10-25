@@ -1,6 +1,8 @@
 import { component } from "@rbxts/matter"
-import Queue from "../queue"
-import { Unit } from "./unit"
+import Queue from "./queue"
+
+export const Unit = component("Unit")
+export type Unit = ReturnType<typeof Unit>
 
 export const Owner = component<{ player: Player }>("Owner")
 export type Owner = ReturnType<typeof Owner>
@@ -13,5 +15,3 @@ export type Speed = ReturnType<typeof Speed>
 
 export const Goal = component<{ queue: Queue<Vector3> }>("Goal")
 export type Goal = ReturnType<typeof Goal>
-
-export { Unit }

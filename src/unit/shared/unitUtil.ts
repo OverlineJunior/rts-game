@@ -1,5 +1,5 @@
-import { AnyEntity, component, World } from "@rbxts/matter"
-import { Position, Speed } from "."
+import { AnyEntity, World } from "@rbxts/matter"
+import { Unit, Position, Speed } from "game/shared/components"
 
 /**
  * Returns wether the client can request movement for the given entity.
@@ -11,6 +11,3 @@ export function canRequestMovement(id: AnyEntity, world: World): boolean {
 		&& world.get(id, Position) !== undefined
 		&& world.get(id, Speed) !== undefined
 }
-
-export const Unit = component("Unit")
-export type Unit = ReturnType<typeof Unit>

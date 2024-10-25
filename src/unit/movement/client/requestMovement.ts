@@ -5,7 +5,7 @@ import { Replica } from "game/client/components"
 import { getMouseWorldPosition } from "game/shared/mouse"
 import { requestMovement as reqMovement } from "game/shared/remotes"
 import { System } from "game/shared/bootstrap"
-import { canRequestMovement } from "game/shared/components/unit"
+import { canRequestMovement } from "unit/shared/unitUtil"
 
 const MOVE_BUTTON = Enum.UserInputType.MouseButton1
 const INCREMENT_BUTTON = Enum.KeyCode.LeftShift

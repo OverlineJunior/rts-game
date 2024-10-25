@@ -1,6 +1,7 @@
 import { useThrottle, World } from "@rbxts/matter"
 import { System } from "game/shared/bootstrap"
 import { Position, Unit } from "game/shared/components"
+import { serializePositionals } from "game/shared/positionals"
 import { sendUnitPosition } from "game/shared/remotes"
 
 // In times per second.
@@ -16,7 +17,15 @@ function replicateUnitPosition(world: World) {
 		if (!pos.new || !world.contains(id) || !world.get(id, Unit)) continue
 		if (!useThrottle(REPLICATION_RATE, id)) continue
 
-		sendUnitPosition.FireAllClients(id, pos.new.value)
+		const p = pos.new.value
+		const packet = serializePositionals({
+			x: pos.new.value.X,
+			z: pos.new.value.Z,
+			// TODO! Send actual orientation when unit rotation is implemented.
+			orientation: 0,
+		})
+
+		sendUnitPosition.FireAllClients(id, packet)
 	}
 }
 

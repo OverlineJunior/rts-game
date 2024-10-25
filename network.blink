@@ -1,0 +1,47 @@
+option ClientOutput = "src/game/client/network.luau"
+option ServerOutput = "src/game/server/network.luau"
+option Typescript = true
+option Casing = Camel
+
+event spawnOnClient {
+    from: Server,
+    type: Reliable,
+    call: SingleSync,
+    data: struct {
+		serverId: u16,
+		serializedComponents: unknown,
+	},
+}
+
+event despawnOnClient {
+	from: Server,
+	type: Reliable,
+	call: SingleSync,
+	data: struct {
+		serverId: u16,
+	},
+}
+
+event sendUnitPosition {
+	from: Server,
+	type: Reliable,
+	call: SingleSync,
+	data: struct {
+		serverId: u16,
+		x: f16,
+		z: f16,
+		orientation: f16,
+	},
+}
+
+event requestMovement {
+	from: Client,
+	type: Reliable,
+	call: SingleSync,
+	data: struct {
+		serverIds: u16[],
+		x: f16,
+		z: f16,
+		increment: boolean,
+	},
+}

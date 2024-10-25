@@ -4,6 +4,7 @@ import { System } from "game/shared/bootstrap"
 import { Goal, Owner } from "game/shared/components"
 import Queue from "game/shared/queue"
 import { requestMovement } from "game/shared/remotes"
+import { canRequestMovement } from "unit/shared/unitUtil"
 
 function acceptMovementRequest(world: World) {
 	requestMovement.OnServerEvent.Connect((sender, serverUnits, goal, increment) => {
@@ -15,7 +16,7 @@ function acceptMovementRequest(world: World) {
 		) return
 
 		(serverUnits as AnyEntity[])
-			.filter(id => world.contains(id) && world.get(id, Owner)?.player === sender)
+			.filter(id => canRequestMovement(id, world) && world.get(id, Owner)?.player === sender)
 			.forEach(id => {
 				world.insert(id, Goal({
 					queue: increment && world.get(id, Goal)

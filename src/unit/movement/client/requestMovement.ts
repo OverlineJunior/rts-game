@@ -5,7 +5,7 @@ import { Replica } from "game/client/components"
 import { getMouseWorldPosition } from "game/shared/mouse"
 import { requestMovement as reqMovement } from "game/shared/remotes"
 import { System } from "game/shared/bootstrap"
-import { canMove } from "unit/shared/unitUtil"
+import { canRequestMovement } from "game/shared/components/unit"
 
 const MOVE_BUTTON = Enum.UserInputType.MouseButton1
 const INCREMENT_BUTTON = Enum.KeyCode.LeftShift
@@ -23,7 +23,7 @@ function requestMovement(world: World, state: ClientState) {
 		if (ui || input.UserInputType !== MOVE_BUTTON) continue
 
 		const serverUnits = state.selection.units
-			.filter(id => canMove(id, world))
+			.filter(id => canRequestMovement(id, world))
 		    .mapFiltered(id => getServerId(world, id))
 
 		if (serverUnits.isEmpty()) continue

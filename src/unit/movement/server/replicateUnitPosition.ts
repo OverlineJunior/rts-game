@@ -6,17 +6,14 @@ import { Position, Unit } from "game/shared/components"
 // In times per second.
 const REPLICATION_RATE = 1 / 10
 
-// TODO! You can optimize this by making `sendUnitPosition` an UnreliableRemoteEvent.
-// ! If you do this, remember that those can fail. A way to handle that is firing unreliably as usual,
-// ! but firing reliably when the unit *just started moving* or *just stopped moving*.
-// ! This idea comes from the fact that when something is ephemeral, its okay it being lost, but since
-// ! when the unit just started/stopped moving it will stay there, we must guarantee that the client matches that position.
+// TODO! Do not replicate when the unit is not moving.
+// ! This is not as simple as it seems, because the unit might stop moving while replication
+// ! is on interval, thus the latest position will not be catched.
 function replicateUnitPosition(world: World) {
-	for (const [id, pos] of world.queryChanged(Position)) {
-		if (!pos.new || !world.contains(id) || !world.get(id, Unit)) continue
+	for (const [id, pos] of world.query(Position, Unit)) {
 		if (!useThrottle(REPLICATION_RATE, id)) continue
 
-		const p = pos.new.value
+		const p = pos.value
 		sendUnitPosition.fireAll({
 			serverId: id,
 			x: p.X,

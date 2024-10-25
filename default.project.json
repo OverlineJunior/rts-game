@@ -13,13 +13,10 @@
 				"game": {
 					"$path": "out/game/server"
 				},
-				"squad": {
-					"$path": "out/squad/server"
-				},
 				"unit": {
 					"$path": "out/unit/server",
-					"replication": {
-						"$path": "out/unit/replication/server"
+					"movement": {
+						"$path": "out/unit/movement/server"
 					},
 					"selection": {
 						"$path": "out/unit/selection/server"
@@ -43,13 +40,10 @@
 				"game": {
 					"$path": "out/game/client"
 				},
-				"squad": {
-					"$path": "out/squad/client"
-				},
 				"unit": {
 					"$path": "out/unit/client",
-					"replication": {
-						"$path": "out/unit/replication/client"
+					"movement": {
+						"$path": "out/unit/movement/client"
 					},
 					"selection": {
 						"$path": "out/unit/selection/client"
@@ -61,13 +55,10 @@
 				"game": {
 					"$path": "out/game/shared"
 				},
-				"squad": {
-					"$path": "out/squad/shared"
-				},
 				"unit": {
 					"$path": "out/unit/shared",
-					"replication": {
-						"$path": "out/unit/replication/shared"
+					"movement": {
+						"$path": "out/unit/movement/shared"
 					},
 					"selection": {
 						"$path": "out/unit/selection/shared"

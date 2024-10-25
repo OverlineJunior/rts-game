@@ -5,7 +5,7 @@ import { Goal, Owner } from "game/shared/components"
 import Queue from "game/shared/queue"
 import { requestMovement } from "game/shared/remotes"
 
-function giveGoals(world: World) {
+function acceptMovementRequest(world: World) {
 	requestMovement.OnServerEvent.Connect((sender, serverUnits, goal, increment) => {
 		if (
 			!t.array(t.number)(serverUnits)
@@ -26,4 +26,4 @@ function giveGoals(world: World) {
 	})
 }
 
-export = new System(giveGoals, { type: "onStartup" })
+export = new System(acceptMovementRequest, { type: "onStartup" })

@@ -6,7 +6,7 @@ import Queue from "game/shared/queue"
 import { requestMovement } from "game/shared/remotes"
 import { canRequestMovement } from "unit/shared/unitUtil"
 
-function acceptMovementRequest(world: World) {
+function giveGoals(world: World) {
 	requestMovement.OnServerEvent.Connect((sender, serverUnits, goal, increment) => {
 		if (
 			!t.array(t.number)(serverUnits)
@@ -27,4 +27,4 @@ function acceptMovementRequest(world: World) {
 	})
 }
 
-export = new System(acceptMovementRequest, { type: "onStartup" })
+export = new System(giveGoals, { type: "onStartup" })

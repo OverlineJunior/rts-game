@@ -6,7 +6,7 @@ import { Unit, Owner, Position, Speed, Velocity, Acceleration } from "game/share
 
 function spawnTestUnit(world: World) {
 	for (const [_, player] of useEvent(Players, "PlayerAdded")) {
-		for (let i = 0; i < 20; i++) {
+		for (let i = 0; i < 50; i++) {
 			const pos = new Vector3(
 				math.random(-5, 5),
 				0,

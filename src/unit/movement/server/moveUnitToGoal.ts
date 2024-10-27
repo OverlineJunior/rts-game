@@ -1,26 +1,20 @@
-import { useDeltaTime, World } from "@rbxts/matter"
+import { World } from "@rbxts/matter"
 import { System } from "game/shared/bootstrap"
-import { Goal, Position, Unit } from "game/shared/components"
-
-function advance(pos: Vector3, goal: Vector3) {
-	const distance = pos.sub(goal).Magnitude
-	if (distance < 1) return goal
-
-	return pos.add(goal.sub(pos).Unit.mul(useDeltaTime() * 10))
-}
+import { Acceleration, Goal, Position, Unit, Velocity } from "game/shared/components"
 
 function moveUnitToGoal(world: World) {
-	for (const [unitId, goal, pos] of world.query(Goal, Position, Unit)) {
+	for (const [unitId, goal, pos, vel] of world.query(Goal, Position, Velocity, Unit)) {
 		const goalPos = goal.queue.peek()!
-		const newPos = advance(pos.value, goalPos)
+		const dist = pos.value.sub(goalPos).Magnitude
+		const dir = goalPos.sub(pos.value).Unit
 
-		if (newPos === goalPos) {
+		if (dist < 1) {
 			world.insert(unitId, Goal({
 				queue: goal.queue.dequeue()
 			}))
 		}
 
-		world.insert(unitId, pos.patch({ value: newPos }))
+		world.insert(unitId, vel.patch({ value: dir.mul(10) }))
 	}
 }
 

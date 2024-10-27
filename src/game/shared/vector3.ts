@@ -9,3 +9,7 @@ export function absVector3(v: Vector3): Vector3 {
 export function fuzzyEqual(a: Vector3, b: Vector3, epsilon = 0.1): boolean {
 	return sumVector3(absVector3(a.sub(b))) < epsilon
 }
+
+export function limit(v: Vector3, max: number): Vector3 {
+	return v.Magnitude > max ? v.Unit.mul(max) : v
+}

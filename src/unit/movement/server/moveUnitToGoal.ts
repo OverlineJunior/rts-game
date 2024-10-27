@@ -24,4 +24,4 @@ function moveUnitToGoal(world: World) {
 	}
 }
 
-export = new System(moveUnitToGoal)
+export = new System(moveUnitToGoal, { priority: -1 })

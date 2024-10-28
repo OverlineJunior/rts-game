@@ -1,6 +1,7 @@
 import { AnySystem, Debugger, Loop, SystemFn, World } from "@rbxts/matter"
 import Plasma from "@rbxts/plasma"
 import { RunService, UserInputService } from "@rbxts/services"
+import { Renderable } from "game/client/components"
 
 const DEBUGGER_TOGGLE_KEYCODE = Enum.KeyCode.F4
 const DEBUGGER_AUTHORIZED_USER_IDS = [93428451]
@@ -25,9 +26,15 @@ export class System {
 	}
 }
 
-function makeDebugger() {
+function makeDebugger(world: World) {
 	const debug = new Debugger(Plasma)
 	debug.authorize = plr => DEBUGGER_AUTHORIZED_USER_IDS.includes(plr.UserId)
+
+	debug.findInstanceFromEntity = e => {
+		if (!world.contains(e)) return
+
+		return world.get(e, Renderable)?.model
+	}
 
 	if (RunService.IsClient()) {
 		UserInputService.InputBegan.Connect((input, processed) => {
@@ -59,7 +66,7 @@ function getSystems(containers: Array<Instance>) {
 
 export function runGame(containers: Array<Instance>, state: object) {
 	const world = new World()
-	const debug = makeDebugger()
+	const debug = makeDebugger(world)
 	const loop = new Loop(world, state, debug.getWidgets())
 
 	debug.loopParameterNames = ["World", "State", "Widgets"]

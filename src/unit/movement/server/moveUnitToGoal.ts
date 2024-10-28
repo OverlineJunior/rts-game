@@ -8,6 +8,8 @@ function moveUnitToGoal(world: World) {
 		const dist = pos.value.sub(goalPos).Magnitude
 		const dir = goalPos.sub(pos.value).Unit
 
+		// While using a bigger distance threshold is less precise, it allows units to reach their goal
+		// faster, without getting stuck between other units because of flocking.
 		if (dist < 1) {
 			world.insert(unitId, Goal({
 				queue: goal.queue.dequeue()

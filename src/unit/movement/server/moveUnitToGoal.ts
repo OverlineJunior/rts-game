@@ -1,9 +1,9 @@
 import { World } from "@rbxts/matter"
 import { System } from "game/shared/bootstrap"
-import { Acceleration, Goal, Position, Unit, Velocity } from "game/shared/components"
+import { Goal, Position, Speed, Unit, Velocity } from "game/shared/components"
 
 function moveUnitToGoal(world: World) {
-	for (const [unitId, goal, pos, vel] of world.query(Goal, Position, Velocity, Unit)) {
+	for (const [unitId, goal, pos, vel, speed] of world.query(Goal, Position, Velocity, Speed, Unit)) {
 		const goalPos = goal.queue.peek()!
 		const dist = pos.value.sub(goalPos).Magnitude
 		const dir = goalPos.sub(pos.value).Unit
@@ -14,7 +14,7 @@ function moveUnitToGoal(world: World) {
 			}))
 		}
 
-		world.insert(unitId, vel.patch({ value: dir.mul(10) }))
+		world.insert(unitId, vel.patch({ value: dir.mul(speed.value) }))
 	}
 }
 

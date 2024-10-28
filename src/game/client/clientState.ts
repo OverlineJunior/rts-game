@@ -1,9 +1,7 @@
-import { AnyEntity } from "@rbxts/matter"
-
-export interface Selection {
-	units: AnyEntity[]
-}
-
 export interface ClientState {
-	selection: Selection
+	selection: {
+		point1?: Vector2,
+		point2?: Vector2,
+		frame?: Frame,
+	}
 }

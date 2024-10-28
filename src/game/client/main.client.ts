@@ -5,9 +5,7 @@ import { ClientState } from "./clientState"
 const systems = [ReplicatedStorage.client, ReplicatedStorage.shared]
 
 const state: ClientState = {
-	selection: {
-		units: []
-	}
+	selection: {}
 }
 
 const world = runGame(systems, state)

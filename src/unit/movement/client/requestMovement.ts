@@ -1,7 +1,6 @@
-import { AnyEntity, World, useEvent } from "@rbxts/matter"
+import { AnyEntity, World } from "@rbxts/matter"
 import { UserInputService } from "@rbxts/services"
-import { ClientState } from "game/client/clientState"
-import { Replica } from "game/client/components"
+import { Replica, Selected } from "game/client/components"
 import { getMouseWorldPosition } from "game/shared/mouse"
 import { requestMovement as reqMovement } from "game/shared/remotes"
 import { System } from "game/shared/bootstrap"
@@ -15,24 +14,34 @@ function getServerId(world: World, unit: AnyEntity) {
 }
 
 function getGoal(): Vector3 {
-	return getMouseWorldPosition(100)
+	return getMouseWorldPosition(1000)
 }
 
-function requestMovement(world: World, state: ClientState) {
-	for (const [_, input, ui] of useEvent(UserInputService, "InputBegan")) {
-		if (ui || input.UserInputType !== MOVE_BUTTON) continue
+function getSelected(world: World) {
+	const selected = []
 
-		const serverUnits = state.selection.units
+	for (const [id] of world.query(Selected)) {
+		selected.push(id)
+	}
+
+	return selected
+}
+
+function requestMovement(world: World) {
+	UserInputService.InputBegan.Connect((input, ui) => {
+		if (ui || input.UserInputType !== MOVE_BUTTON) return
+
+		const serverUnits = getSelected(world)
 			.filter(id => canRequestMovement(id, world))
 		    .mapFiltered(id => getServerId(world, id))
 
-		if (serverUnits.isEmpty()) continue
+		if (serverUnits.isEmpty()) return
 
 		const goal = getGoal()
 		const increment = UserInputService.IsKeyDown(INCREMENT_BUTTON) ? true : false
 
 		reqMovement.FireServer(serverUnits, goal, increment)
-	}
+	})
 }
 
-export = new System(requestMovement)
+export = new System(requestMovement, { type: "onStartup" })

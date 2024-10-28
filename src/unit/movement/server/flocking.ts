@@ -3,7 +3,7 @@ import { System } from "game/shared/bootstrap"
 import { Acceleration, Position, Unit, Velocity } from "game/shared/components"
 import { limit } from "game/shared/vector3"
 
-const VIEW_RADIUS = 2
+const VIEW_RADIUS = 4
 
 function distance(a: Vector3, b: Vector3): number {
 	return math.pow(b.X - a.X, 2) + math.pow(b.Z - a.Z, 2)

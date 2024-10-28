@@ -7,7 +7,7 @@ import { requestMovement } from "game/shared/remotes"
 import { canRequestMovement } from "unit/shared/unitUtil"
 
 function randomizeGoal(goal: Vector3, unitCount: number): Vector3 {
-    const maxRadius = (unitCount - 1) * 0.075;
+    const maxRadius = (unitCount - 1) * 0.2;
 
     const angle = math.random() * 2 * math.pi;
     const radius = math.random() * maxRadius;

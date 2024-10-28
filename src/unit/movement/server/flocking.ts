@@ -38,8 +38,8 @@ function cohesion(unitId: AnyEntity, unitPos: Vector3, unitVel: Vector3, nearbyU
 
 	if (centerMass.sub(unitPos) === Vector3.zero) return Vector3.zero
 
-	const toCenter = centerMass.sub(unitPos).Unit.mul(4)
-	const steer = limit(toCenter.sub(unitVel), 0.1)
+	const toCenter = centerMass.sub(unitPos).Unit.mul(10)
+	const steer = limit(toCenter.sub(unitVel), 99)
 
 	return steer
 }
@@ -59,7 +59,7 @@ function separation(unitId: AnyEntity, unitPos: Vector3, nearbyUnits: AnyEntity[
 
 	if (steer === Vector3.zero) return Vector3.zero
 
-	return steer.Unit.mul(4)
+	return steer.Unit.mul(20)
 }
 
 function alignment(unitId: AnyEntity, unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
@@ -72,7 +72,7 @@ function alignment(unitId: AnyEntity, unitVel: Vector3, nearbyUnits: AnyEntity[]
 		.reduce((acc, v) => acc.add(v), new Vector3())
 		.div(nearbyVelocities.size())
 
-	const steer = limit(avgVelocity.sub(unitVel), 0.1)
+	const steer = limit(avgVelocity.sub(unitVel), 99)
 
 	return steer
 }
@@ -84,7 +84,7 @@ function flocking(world: World) {
 		let steering = Vector3.zero
 		steering = steering.add(cohesion(unit, pos.value, vel.value, nearby, world))
 		steering = steering.add(separation(unit, pos.value, nearby, world))
-		steering = steering.add(alignment(unit, vel.value, nearby, world))
+		//steering = steering.add(alignment(unit, vel.value, nearby, world))
 
 		world.insert(unit, Acceleration({ value: steering }))
 	}

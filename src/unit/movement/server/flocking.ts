@@ -6,9 +6,7 @@ import { limit } from "game/shared/vector3"
 const VIEW_RADIUS = 2
 
 function distance(a: Vector3, b: Vector3): number {
-	const p = new Vector2(a.X, a.Z)
-	const q = new Vector2(b.X, b.Z)
-	return p.sub(q).Magnitude
+	return math.pow(b.X - a.X, 2) + math.pow(b.Z - a.Z, 2)
 }
 
 function nearbyUnits(toUnit: AnyEntity, radius: number, world: World) {

@@ -9,7 +9,7 @@ export declare const despawnOnClient: {
 	on: (Listener: (Value: { serverId: number }) => void) => (() => void)
 }
 export declare const sendUnitPosition: {
-	on: (Listener: (Value: { serverId: number, x: number, z: number, orientation: number }) => void) => (() => void)
+	on: (Listener: (Value: { serverId: number, x: number, y: number, z: number, orientation: number }) => void) => (() => void)
 }
 export declare const requestMovement: {
 	fire: (Value: { serverIds: number[], x: number, z: number, increment: boolean }) => void

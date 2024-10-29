@@ -17,6 +17,7 @@ function replicateUnitPosition(world: World) {
 		sendUnitPosition.fireAll({
 			serverId: id,
 			x: p.X,
+			y: p.Y,
 			z: p.Z,
 			orientation: 0,
 		})

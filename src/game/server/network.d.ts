@@ -15,10 +15,10 @@ export declare const despawnOnClient: {
 	fireList: (List: Player[], Value: { serverId: number }) => void
 }
 export declare const sendUnitPosition: {
-	fire: (Player: Player, Value: { serverId: number, x: number, z: number, orientation: number }) => void
-	fireAll: (Value: { serverId: number, x: number, z: number, orientation: number }) => void
-	fireExcept: (Except: Player, Value: { serverId: number, x: number, z: number, orientation: number }) => void
-	fireList: (List: Player[], Value: { serverId: number, x: number, z: number, orientation: number }) => void
+	fire: (Player: Player, Value: { serverId: number, x: number, y: number, z: number, orientation: number }) => void
+	fireAll: (Value: { serverId: number, x: number, y: number, z: number, orientation: number }) => void
+	fireExcept: (Except: Player, Value: { serverId: number, x: number, y: number, z: number, orientation: number }) => void
+	fireList: (List: Player[], Value: { serverId: number, x: number, y: number, z: number, orientation: number }) => void
 }
 export declare const requestMovement: {
 	on: (Listener: (Player: Player, Value: { serverIds: number[], x: number, z: number, increment: boolean }) => void) => (() => void)

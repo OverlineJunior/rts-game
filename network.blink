@@ -29,6 +29,7 @@ event sendUnitPosition {
 	data: struct {
 		serverId: u16,
 		x: f16,
+		y: f16,
 		z: f16,
 		orientation: f16,
 	},

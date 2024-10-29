@@ -189,9 +189,9 @@ function Types.WriteEVENT_despawnOnClient(Value: { serverId: number }): ()
 	buffer.writeu16(SendBuffer, BLOCK_START + 1, Value.serverId)
 end
 
-function Types.ReadEVENT_sendUnitPosition(): ({ serverId: number, x: number, z: number, orientation: number })
-	-- Read BLOCK: 8 bytes
-	local BLOCK_START = Read(8)
+function Types.ReadEVENT_sendUnitPosition(): ({ serverId: number, x: number, y: number, z: number, orientation: number })
+	-- Read BLOCK: 10 bytes
+	local BLOCK_START = Read(10)
 	local Value = {} :: any
 	Value.serverId = buffer.readu16(RecieveBuffer, BLOCK_START + 0)
 	local Encoded = buffer.readu16(RecieveBuffer, BLOCK_START + 2)
@@ -222,6 +222,30 @@ function Types.ReadEVENT_sendUnitPosition(): ({ serverId: number, x: number, z: 
 	local MantissaExponent = Encoded % 0x8000
 	if MantissaExponent == 0b0_11111_0000000000  then
 		if Encoded // 0x8000 == 1 then
+			Value.y = -math.huge
+		else
+			Value.y = math.huge
+		end
+	elseif MantissaExponent == 0b1_11111_0000000000   then
+		Value.y = 0 / 0
+	elseif MantissaExponent == 0b0_00000_0000000000   then
+		Value.y = 0
+	else
+		local Mantissa = MantissaExponent % 0x400
+		local Exponent = MantissaExponent // 0x400
+		local Fraction;
+		if Exponent == 0 then
+			Fraction = Mantissa / 0x400
+		else
+			Fraction = Mantissa / 0x800 + 0.5
+		end
+		local Result = math.ldexp(Fraction, Exponent - 14)
+		Value.y = if Encoded // 0x8000 == 1 then -Result else Result
+	end
+	Encoded = buffer.readu16(RecieveBuffer, BLOCK_START + 6)
+	local MantissaExponent = Encoded % 0x8000
+	if MantissaExponent == 0b0_11111_0000000000  then
+		if Encoded // 0x8000 == 1 then
 			Value.z = -math.huge
 		else
 			Value.z = math.huge
@@ -242,7 +266,7 @@ function Types.ReadEVENT_sendUnitPosition(): ({ serverId: number, x: number, z: 
 		local Result = math.ldexp(Fraction, Exponent - 14)
 		Value.z = if Encoded // 0x8000 == 1 then -Result else Result
 	end
-	Encoded = buffer.readu16(RecieveBuffer, BLOCK_START + 6)
+	Encoded = buffer.readu16(RecieveBuffer, BLOCK_START + 8)
 	local MantissaExponent = Encoded % 0x8000
 	if MantissaExponent == 0b0_11111_0000000000  then
 		if Encoded // 0x8000 == 1 then
@@ -269,9 +293,9 @@ function Types.ReadEVENT_sendUnitPosition(): ({ serverId: number, x: number, z: 
 	return Value
 end
 
-function Types.WriteEVENT_sendUnitPosition(Value: { serverId: number, x: number, z: number, orientation: number }): ()
-	-- Allocate BLOCK: 9 bytes
-	local BLOCK_START = Allocate(9)
+function Types.WriteEVENT_sendUnitPosition(Value: { serverId: number, x: number, y: number, z: number, orientation: number }): ()
+	-- Allocate BLOCK: 11 bytes
+	local BLOCK_START = Allocate(11)
 	buffer.writeu8(SendBuffer, BLOCK_START + 0, 2)
 	buffer.writeu16(SendBuffer, BLOCK_START + 1, Value.serverId)
 	if Value.x > 65504 then
@@ -297,16 +321,16 @@ function Types.WriteEVENT_sendUnitPosition(Value: { serverId: number, x: number,
 			+ if float < 0 then 0x8000 else 0
 		buffer.writeu16(SendBuffer, BLOCK_START + 3, Result)
 	end
-	if Value.z > 65504 then
+	if Value.y > 65504 then
 		buffer.writeu16(SendBuffer, BLOCK_START + 5, 0b0_11111_0000000000)
-	elseif Value.z < -65504 then
+	elseif Value.y < -65504 then
 		buffer.writeu16(SendBuffer, BLOCK_START + 5, 0b1_11111_0000000000)
-	elseif Value.z ~= Value.z then
+	elseif Value.y ~= Value.y then
 		buffer.writeu16(SendBuffer, BLOCK_START + 5, 0b1_11111_0000000001)
-	elseif Value.z == 0 then
+	elseif Value.y == 0 then
 		buffer.writeu16(SendBuffer, BLOCK_START + 5, 0)
 	else
-		local float = Value.z
+		local float = Value.y
 		local Abosulte = math.abs(float)
 		local Interval = math.ldexp(1, math.floor(math.log(Abosulte, 2)) - 10)
 		local RoundedValue = (Abosulte // Interval) * Interval
@@ -320,14 +344,37 @@ function Types.WriteEVENT_sendUnitPosition(Value: { serverId: number, x: number,
 			+ if float < 0 then 0x8000 else 0
 		buffer.writeu16(SendBuffer, BLOCK_START + 5, Result)
 	end
-	if Value.orientation > 65504 then
+	if Value.z > 65504 then
 		buffer.writeu16(SendBuffer, BLOCK_START + 7, 0b0_11111_0000000000)
-	elseif Value.orientation < -65504 then
+	elseif Value.z < -65504 then
 		buffer.writeu16(SendBuffer, BLOCK_START + 7, 0b1_11111_0000000000)
-	elseif Value.orientation ~= Value.orientation then
+	elseif Value.z ~= Value.z then
 		buffer.writeu16(SendBuffer, BLOCK_START + 7, 0b1_11111_0000000001)
-	elseif Value.orientation == 0 then
+	elseif Value.z == 0 then
 		buffer.writeu16(SendBuffer, BLOCK_START + 7, 0)
+	else
+		local float = Value.z
+		local Abosulte = math.abs(float)
+		local Interval = math.ldexp(1, math.floor(math.log(Abosulte, 2)) - 10)
+		local RoundedValue = (Abosulte // Interval) * Interval
+		local Fraction, Exponent = math.frexp(RoundedValue)
+		Exponent += 14
+		local Mantissa = math.round(if Exponent <= 0
+			then Fraction * 0x400 / math.ldexp(1, math.abs(Exponent))
+			else Fraction * 0x800) % 0x400
+		local Result = Mantissa
+			+ math.max(Exponent, 0) * 0x400
+			+ if float < 0 then 0x8000 else 0
+		buffer.writeu16(SendBuffer, BLOCK_START + 7, Result)
+	end
+	if Value.orientation > 65504 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 9, 0b0_11111_0000000000)
+	elseif Value.orientation < -65504 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 9, 0b1_11111_0000000000)
+	elseif Value.orientation ~= Value.orientation then
+		buffer.writeu16(SendBuffer, BLOCK_START + 9, 0b1_11111_0000000001)
+	elseif Value.orientation == 0 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 9, 0)
 	else
 		local float = Value.orientation
 		local Abosulte = math.abs(float)
@@ -341,7 +388,7 @@ function Types.WriteEVENT_sendUnitPosition(Value: { serverId: number, x: number,
 		local Result = Mantissa
 			+ math.max(Exponent, 0) * 0x400
 			+ if float < 0 then 0x8000 else 0
-		buffer.writeu16(SendBuffer, BLOCK_START + 7, Result)
+		buffer.writeu16(SendBuffer, BLOCK_START + 9, Result)
 	end
 end
 
@@ -561,7 +608,7 @@ Reliable.OnClientEvent:Connect(function(Buffer: buffer, Instances: {Instance})
 				table.insert(Queue.Reliable[1], {Value} :: {any})
 			end
 		elseif Index == 2 then
-			local Value: { serverId: number, x: number, z: number, orientation: number } = Types.ReadEVENT_sendUnitPosition()
+			local Value: { serverId: number, x: number, y: number, z: number, orientation: number } = Types.ReadEVENT_sendUnitPosition()
 			if Events.Reliable[2] ~= nil then
 				Events.Reliable[2](Value)
 			else
@@ -615,7 +662,7 @@ local Returns = table.freeze({
 		end
 	},
 	sendUnitPosition = {
-		on = function(Listener: (Value: { serverId: number, x: number, z: number, orientation: number }) -> ()): () -> ()
+		on = function(Listener: (Value: { serverId: number, x: number, y: number, z: number, orientation: number }) -> ()): () -> ()
 			Events.Reliable[2] = Listener
 			for Index, Arguments in Queue.Reliable[2] do
 				Listener(table.unpack(Arguments))

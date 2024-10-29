@@ -36,7 +36,7 @@ function cohesion(unitId: AnyEntity, unitPos: Vector3, unitVel: Vector3, nearbyU
 
 	if (centerMass.sub(unitPos) === Vector3.zero) return Vector3.zero
 
-	const toCenter = centerMass.sub(unitPos).Unit.mul(10)
+	const toCenter = centerMass.sub(unitPos).Unit.mul(8)
 	const steer = limit(toCenter.sub(unitVel), 99)
 
 	return steer
@@ -57,7 +57,7 @@ function separation(unitId: AnyEntity, unitPos: Vector3, nearbyUnits: AnyEntity[
 
 	if (steer === Vector3.zero) return Vector3.zero
 
-	return steer.Unit.mul(20)
+	return steer.Unit.mul(16)
 }
 
 function alignment(unitId: AnyEntity, unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {

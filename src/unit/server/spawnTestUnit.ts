@@ -9,7 +9,7 @@ function spawnTestUnit(world: World) {
 		for (let i = 0; i < 50; i++) {
 			const pos = new Vector3(
 				math.random(-5, 5),
-				0,
+				0.75 / 2,
 				math.random(-5, 5),
 			)
 

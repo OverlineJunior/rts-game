@@ -9,7 +9,7 @@ export type Renderable = ReturnType<typeof Renderable>
 export const ServerPosition = component<{ value: Vector3 }>("ServerPosition")
 export type ServerPosition = ReturnType<typeof ServerPosition>
 
-export const Selected = component<{ highlight?: Highlight }>("Selected")
+export const Selected = component<{ part?: Part }>("Selected")
 export type Selected = ReturnType<typeof Selected>
 
 export const Selectable = component("Selectable")

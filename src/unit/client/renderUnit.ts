@@ -14,9 +14,10 @@ function getTemporaryModel(): Model {
 
 	const body = new Instance("Part")
 	body.Name = "body"
-	body.Size = new Vector3(0.75, RNG.NextNumber(0.95, 1), 0.75)
+	body.Size = new Vector3(0.75, 0.75, 0.75)
 	body.Anchored = true
 	body.BrickColor = BrickColor.random()
+	body.Material = Enum.Material.SmoothPlastic
 	body.CanCollide = false
 	body.CanTouch = false
 	body.CanQuery = false

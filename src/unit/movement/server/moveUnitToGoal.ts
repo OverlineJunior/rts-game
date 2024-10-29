@@ -6,7 +6,8 @@ function moveUnitToGoal(world: World) {
 	for (const [unitId, goal, pos, vel, speed] of world.query(Goal, Position, Velocity, Speed, Unit)) {
 		const goalPos = goal.queue.peek()!
 		const dist = pos.value.sub(goalPos).Magnitude
-		const dir = goalPos.sub(pos.value).Unit
+		let dir = goalPos.sub(pos.value).Unit
+		dir = new Vector3(dir.X, 0, dir.Z)
 
 		// While using a bigger distance threshold is less precise, it allows units to reach their goal
 		// faster, without getting stuck between other units because of flocking.

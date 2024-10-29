@@ -24,7 +24,7 @@ function nearbyUnits(toUnit: AnyEntity, radius: number, world: World) {
 	return nearby
 }
 
-function cohesion(unitId: AnyEntity, unitPos: Vector3, unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
+function cohesion(unitPos: Vector3, unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
 	const nearbyPositions = nearbyUnits
 			.map(u => world.get(u, Position)!.value)
 
@@ -42,7 +42,7 @@ function cohesion(unitId: AnyEntity, unitPos: Vector3, unitVel: Vector3, nearbyU
 	return steer
 }
 
-function separation(unitId: AnyEntity, unitPos: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
+function separation(unitPos: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
 	const nearbyPositions = nearbyUnits
 			.map(u => world.get(u, Position)!.value)
 
@@ -60,7 +60,7 @@ function separation(unitId: AnyEntity, unitPos: Vector3, nearbyUnits: AnyEntity[
 	return steer.Unit.mul(16)
 }
 
-function alignment(unitId: AnyEntity, unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
+function alignment(unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
 	const nearbyVelocities = nearbyUnits
 			.map(u => world.get(u, Velocity)!.value)
 
@@ -80,9 +80,9 @@ function flocking(world: World) {
 		const nearby = nearbyUnits(unit, VIEW_RADIUS, world)
 
 		let steering = Vector3.zero
-		steering = steering.add(cohesion(unit, pos.value, vel.value, nearby, world))
-		steering = steering.add(separation(unit, pos.value, nearby, world))
-		//steering = steering.add(alignment(unit, vel.value, nearby, world))
+		steering = steering.add(cohesion(pos.value, vel.value, nearby, world))
+		steering = steering.add(separation(pos.value, nearby, world))
+		//steering = steering.add(alignment(vel.value, nearby, world))
 
 		world.insert(unit, Acceleration({ value: steering }))
 	}

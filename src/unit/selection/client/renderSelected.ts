@@ -3,7 +3,8 @@ import { Renderable, Selected } from "game/client/components"
 import { System } from "game/shared/bootstrap"
 
 const IMAGE_ID = "rbxassetid://12914395250"
-const COLOR = Color3.fromRGB(50, 150, 255)
+const COLOR = Color3.fromRGB(255, 255, 255)
+const TRANSPARENCY = 0.4
 const SCALE = 2.4
 
 function renderSelected(world: World) {
@@ -28,6 +29,7 @@ function renderSelected(world: World) {
 
 		const img = new Instance("ImageLabel")
 		img.Image = IMAGE_ID
+		img.ImageTransparency = TRANSPARENCY
 		img.Size = UDim2.fromScale(1, 1)
 		img.ImageColor3 = COLOR
 		img.BackgroundTransparency = 1

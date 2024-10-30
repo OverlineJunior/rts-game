@@ -4,6 +4,7 @@ import { ClientState } from "game/client/clientState";
 import { System } from "game/shared/bootstrap";
 
 const SELECT_BUTTON = Enum.UserInputType.MouseButton1
+const MIN_HOLD_TIME = 0.1
 
 function updateSelectionPoints(_: World, { selection }: ClientState) {
 	let thread: thread | undefined
@@ -12,7 +13,7 @@ function updateSelectionPoints(_: World, { selection }: ClientState) {
 		if (ui || input.UserInputType !== SELECT_BUTTON) return
 
 		const point = UserInputService.GetMouseLocation()
-		thread = task.delay(0.1, () => selection.point1 = point)
+		thread = task.delay(MIN_HOLD_TIME, () => selection.point1 = point)
 	})
 
 	UserInputService.InputChanged.Connect(input => {

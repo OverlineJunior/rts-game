@@ -8,6 +8,7 @@ import { canRequestMovement } from "unit/shared/unitUtil"
 
 const MOVE_BUTTON = Enum.UserInputType.MouseButton1
 const INCREMENT_BUTTON = Enum.KeyCode.LeftShift
+const MAX_HOLD_TIME = 0.1
 
 function getServerId(world: World, unit: AnyEntity) {
 	return world.contains(unit) ? world.get(unit, Replica)?.serverId : undefined
@@ -40,7 +41,7 @@ function requestMovement(world: World) {
 		if (ui || input.UserInputType !== MOVE_BUTTON || !pressTime) return
 
 		const elapsed = tick() - pressTime
-		if (elapsed > 0.1) return
+		if (elapsed > MAX_HOLD_TIME) return
 		pressTime = undefined
 
 		const serverUnits = getSelected(world)

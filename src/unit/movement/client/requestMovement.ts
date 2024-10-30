@@ -28,8 +28,20 @@ function getSelected(world: World) {
 }
 
 function requestMovement(world: World) {
+	let pressTime: number | undefined
+
 	UserInputService.InputBegan.Connect((input, ui) => {
 		if (ui || input.UserInputType !== MOVE_BUTTON) return
+
+		pressTime = tick()
+	})
+
+	UserInputService.InputEnded.Connect((input, ui) => {
+		if (ui || input.UserInputType !== MOVE_BUTTON || !pressTime) return
+
+		const elapsed = tick() - pressTime
+		if (elapsed > 0.1) return
+		pressTime = undefined
 
 		const serverUnits = getSelected(world)
 			.filter(id => canRequestMovement(id, world))

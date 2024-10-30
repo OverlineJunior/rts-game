@@ -6,10 +6,13 @@ import { System } from "game/shared/bootstrap";
 const SELECT_BUTTON = Enum.UserInputType.MouseButton1
 
 function updateSelectionPoints(_: World, { selection }: ClientState) {
+	let thread: thread | undefined
+
 	UserInputService.InputBegan.Connect((input, ui) => {
 		if (ui || input.UserInputType !== SELECT_BUTTON) return
 
-		selection.point1 = UserInputService.GetMouseLocation()
+		const point = UserInputService.GetMouseLocation()
+		thread = task.delay(0.1, () => selection.point1 = point)
 	})
 
 	UserInputService.InputChanged.Connect(input => {
@@ -19,7 +22,9 @@ function updateSelectionPoints(_: World, { selection }: ClientState) {
 	})
 
 	UserInputService.InputEnded.Connect((input, ui) => {
-		if (ui || input.UserInputType !== SELECT_BUTTON || !selection.point1) return
+		if (ui || input.UserInputType !== SELECT_BUTTON) return
+
+		if (thread) task.cancel(thread)
 
 		selection.point1 = undefined
 	})

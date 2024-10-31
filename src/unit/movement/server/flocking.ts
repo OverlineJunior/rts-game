@@ -74,7 +74,9 @@ function alignment(unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Ve
 
 	return steer
 }
+
 let flag = false
+
 function flocking(world: World) {
 	for (const [unit, pos, vel] of world.query(Position, Velocity, Unit)) {
 		// Based on the alternating flag, we only update even or odd units for performance reasons.

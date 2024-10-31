@@ -17,9 +17,6 @@
 					"$path": "out/unit/server",
 					"movement": {
 						"$path": "out/unit/movement/server"
-					},
-					"selection": {
-						"$path": "out/unit/selection/server"
 					}
 				}
 			}
@@ -44,10 +41,10 @@
 					"$path": "out/unit/client",
 					"movement": {
 						"$path": "out/unit/movement/client"
-					},
-					"selection": {
-						"$path": "out/unit/selection/client"
 					}
+				},
+				"selection": {
+					"$path": "out/selection/client"
 				}
 			},
 			"shared": {
@@ -59,9 +56,6 @@
 					"$path": "out/unit/shared",
 					"movement": {
 						"$path": "out/unit/movement/shared"
-					},
-					"selection": {
-						"$path": "out/unit/selection/shared"
 					}
 				}
 			}

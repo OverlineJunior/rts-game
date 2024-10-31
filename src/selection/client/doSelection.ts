@@ -26,7 +26,7 @@ function selectInBounds(bounds: [Vector2, Vector2], world: World) {
 	}
 }
 
-function selectUnits(world: World, { selection }: ClientState) {
+function doSelection(world: World, { selection }: ClientState) {
 	if (lastPoint1 && !selection.point1 && selection.point2) {
 		selectInBounds(getBounds(lastPoint1, selection.point2), world)
 	}
@@ -34,4 +34,4 @@ function selectUnits(world: World, { selection }: ClientState) {
 	lastPoint1 = selection.point1
 }
 
-export = new System(selectUnits)
+export = new System(doSelection)

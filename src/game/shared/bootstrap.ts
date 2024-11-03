@@ -2,9 +2,9 @@ import { AnySystem, Debugger, Loop, SystemFn, World } from "@rbxts/matter"
 import Plasma from "@rbxts/plasma"
 import { RunService, UserInputService } from "@rbxts/services"
 import { Renderable } from "game/client/components"
+import powerUsers from "./powerUsers"
 
 const DEBUGGER_TOGGLE_KEYCODE = Enum.KeyCode.F4
-const DEBUGGER_AUTHORIZED_USER_IDS = [93428451]
 
 interface SystemStruct {
 	system: SystemFn<[...any]>
@@ -28,7 +28,7 @@ export class System {
 
 function makeDebugger(world: World) {
 	const debug = new Debugger(Plasma)
-	debug.authorize = plr => DEBUGGER_AUTHORIZED_USER_IDS.includes(plr.UserId)
+	debug.authorize = plr => powerUsers.includes(plr.UserId)
 
 	debug.findInstanceFromEntity = e => {
 		if (!world.contains(e)) return

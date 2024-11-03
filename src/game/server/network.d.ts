@@ -23,3 +23,6 @@ export declare const sendUnitPosition: {
 export declare const requestMovement: {
 	on: (Listener: (Player: Player, Value: { serverIds: number[], x: number, z: number, increment: boolean }) => void) => (() => void)
 }
+export declare const spawnUnitCmd: {
+	on: (Listener: (Player: Player, Value: { x: number, z: number }) => void) => (() => void)
+}

@@ -150,6 +150,7 @@ local Queue: any = {
 }
 
 Queue.Reliable[3] = table.create(256)
+Queue.Reliable[4] = table.create(256)
 function Types.ReadEVENT_spawnOnClient(): ({ serverId: number, serializedComponents: any })
 	-- Read BLOCK: 3 bytes
 	local BLOCK_START = Read(3)
@@ -527,6 +528,113 @@ function Types.WriteEVENT_requestMovement(Value: { serverIds: {number}, x: numbe
 	buffer.writeu8(SendBuffer, BLOCK_START + 7, Value.increment and 1 or 0)
 end
 
+function Types.ReadEVENT_spawnUnitCmd(): ({ x: number, z: number })
+	-- Read BLOCK: 4 bytes
+	local BLOCK_START = Read(4)
+	local Value = {} :: any
+	local Encoded = buffer.readu16(RecieveBuffer, BLOCK_START + 0)
+	local MantissaExponent = Encoded % 0x8000
+	if MantissaExponent == 0b0_11111_0000000000  then
+		if Encoded // 0x8000 == 1 then
+			Value.x = -math.huge
+		else
+			Value.x = math.huge
+		end
+	elseif MantissaExponent == 0b1_11111_0000000000   then
+		Value.x = 0 / 0
+	elseif MantissaExponent == 0b0_00000_0000000000   then
+		Value.x = 0
+	else
+		local Mantissa = MantissaExponent % 0x400
+		local Exponent = MantissaExponent // 0x400
+		local Fraction;
+		if Exponent == 0 then
+			Fraction = Mantissa / 0x400
+		else
+			Fraction = Mantissa / 0x800 + 0.5
+		end
+		local Result = math.ldexp(Fraction, Exponent - 14)
+		Value.x = if Encoded // 0x8000 == 1 then -Result else Result
+	end
+	Encoded = buffer.readu16(RecieveBuffer, BLOCK_START + 2)
+	local MantissaExponent = Encoded % 0x8000
+	if MantissaExponent == 0b0_11111_0000000000  then
+		if Encoded // 0x8000 == 1 then
+			Value.z = -math.huge
+		else
+			Value.z = math.huge
+		end
+	elseif MantissaExponent == 0b1_11111_0000000000   then
+		Value.z = 0 / 0
+	elseif MantissaExponent == 0b0_00000_0000000000   then
+		Value.z = 0
+	else
+		local Mantissa = MantissaExponent % 0x400
+		local Exponent = MantissaExponent // 0x400
+		local Fraction;
+		if Exponent == 0 then
+			Fraction = Mantissa / 0x400
+		else
+			Fraction = Mantissa / 0x800 + 0.5
+		end
+		local Result = math.ldexp(Fraction, Exponent - 14)
+		Value.z = if Encoded // 0x8000 == 1 then -Result else Result
+	end
+	return Value
+end
+
+function Types.WriteEVENT_spawnUnitCmd(Value: { x: number, z: number }): ()
+	-- Allocate BLOCK: 5 bytes
+	local BLOCK_START = Allocate(5)
+	buffer.writeu8(SendBuffer, BLOCK_START + 0, 4)
+	if Value.x > 65504 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 1, 0b0_11111_0000000000)
+	elseif Value.x < -65504 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 1, 0b1_11111_0000000000)
+	elseif Value.x ~= Value.x then
+		buffer.writeu16(SendBuffer, BLOCK_START + 1, 0b1_11111_0000000001)
+	elseif Value.x == 0 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 1, 0)
+	else
+		local float = Value.x
+		local Abosulte = math.abs(float)
+		local Interval = math.ldexp(1, math.floor(math.log(Abosulte, 2)) - 10)
+		local RoundedValue = (Abosulte // Interval) * Interval
+		local Fraction, Exponent = math.frexp(RoundedValue)
+		Exponent += 14
+		local Mantissa = math.round(if Exponent <= 0
+			then Fraction * 0x400 / math.ldexp(1, math.abs(Exponent))
+			else Fraction * 0x800) % 0x400
+		local Result = Mantissa
+			+ math.max(Exponent, 0) * 0x400
+			+ if float < 0 then 0x8000 else 0
+		buffer.writeu16(SendBuffer, BLOCK_START + 1, Result)
+	end
+	if Value.z > 65504 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 3, 0b0_11111_0000000000)
+	elseif Value.z < -65504 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 3, 0b1_11111_0000000000)
+	elseif Value.z ~= Value.z then
+		buffer.writeu16(SendBuffer, BLOCK_START + 3, 0b1_11111_0000000001)
+	elseif Value.z == 0 then
+		buffer.writeu16(SendBuffer, BLOCK_START + 3, 0)
+	else
+		local float = Value.z
+		local Abosulte = math.abs(float)
+		local Interval = math.ldexp(1, math.floor(math.log(Abosulte, 2)) - 10)
+		local RoundedValue = (Abosulte // Interval) * Interval
+		local Fraction, Exponent = math.frexp(RoundedValue)
+		Exponent += 14
+		local Mantissa = math.round(if Exponent <= 0
+			then Fraction * 0x400 / math.ldexp(1, math.abs(Exponent))
+			else Fraction * 0x800) % 0x400
+		local Result = Mantissa
+			+ math.max(Exponent, 0) * 0x400
+			+ if float < 0 then 0x8000 else 0
+		buffer.writeu16(SendBuffer, BLOCK_START + 3, Result)
+	end
+end
+
 if not RunService:IsRunning() then
 	local NOOP = function() end
 	local Returns = table.freeze({
@@ -549,6 +657,9 @@ if not RunService:IsRunning() then
 		fireExcept = NOOP
 	},
 	requestMovement = {
+		on = NOOP
+	},
+	spawnUnitCmd = {
 		on = NOOP
 	},
 	})
@@ -617,6 +728,16 @@ Reliable.OnServerEvent:Connect(function(Player: Player, Buffer: buffer, Instance
 					warn("[Blink]: Event queue of \"requestMovement\" exceeded 256, did you forget to implement a listener?")
 				end
 				table.insert(Queue.Reliable[3], {Player, Value} :: {any})
+			end
+		elseif Index == 4 then
+			local Value: { x: number, z: number } = Types.ReadEVENT_spawnUnitCmd()
+			if Events.Reliable[4] ~= nil then
+				Events.Reliable[4](Player, Value)
+			else
+				if #Queue.Reliable[4] > 256 then
+					warn("[Blink]: Event queue of \"spawnUnitCmd\" exceeded 256, did you forget to implement a listener?")
+				end
+				table.insert(Queue.Reliable[4], {Player, Value} :: {any})
 			end
 		end
 	end
@@ -785,6 +906,18 @@ local Returns = table.freeze({
 			Queue.Reliable[3] = {}
 			return function (): ()
 				Events.Reliable[3] = nil
+			end
+		end
+	},
+	spawnUnitCmd = {
+		on = function(Listener: (Player: Player, Value: { x: number, z: number }) -> ()): () -> ()
+			Events.Reliable[4] = Listener
+			for Index, Arguments in Queue.Reliable[4] do
+				Listener(table.unpack(Arguments))
+			end
+			Queue.Reliable[4] = {}
+			return function (): ()
+				Events.Reliable[4] = nil
 			end
 		end
 	},

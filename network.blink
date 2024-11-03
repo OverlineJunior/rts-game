@@ -46,3 +46,13 @@ event requestMovement {
 		increment: boolean,
 	},
 }
+
+event spawnUnitCmd {
+	from: Client,
+	type: Reliable,
+	call: SingleSync,
+	data: struct {
+		x: f16,
+		z: f16,
+	},
+}

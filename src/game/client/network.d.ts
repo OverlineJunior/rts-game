@@ -14,3 +14,6 @@ export declare const sendUnitPosition: {
 export declare const requestMovement: {
 	fire: (Value: { serverIds: number[], x: number, z: number, increment: boolean }) => void
 }
+export declare const spawnUnitCmd: {
+	fire: (Value: { x: number, z: number }) => void
+}

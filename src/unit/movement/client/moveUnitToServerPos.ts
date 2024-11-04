@@ -5,6 +5,8 @@ import { Position, Speed } from "game/shared/components"
 
 function moveUnitToServerPos(world: World) {
 	for (const [id, pos, serverPos] of world.query(Position, ServerPosition, Speed)) {
+		if (pos.value === serverPos.value) continue
+
 		// TODO! Implement a proper interpolation system for smooth movements.
 		world.insert(id, pos.patch({ value: serverPos.value }))
 	}

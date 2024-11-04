@@ -23,7 +23,7 @@ function updateSelectionPoints(_: World, { selection }: ClientState) {
 	})
 
 	UserInputService.InputEnded.Connect((input, ui) => {
-		if (ui || input.UserInputType !== SELECT_BUTTON) return
+		if (input.UserInputType !== SELECT_BUTTON) return
 
 		if (thread) task.cancel(thread)
 

@@ -4,20 +4,14 @@ import { spawnUnitCmd } from "game/server/network"
 import { System } from "game/shared/bootstrap"
 import { Unit, Owner, Position, Speed, Velocity, Acceleration } from "game/shared/components"
 import powerUsers from "game/shared/powerUsers"
+import { unitBundle } from "./unitUtil"
+import { basic } from "unit/shared/unitData"
 
 function accSpawnUnitCmd(world: World) {
 	spawnUnitCmd.on((client, { x, z }) => {
 		if (!powerUsers.includes(client.UserId)) return
 
-		world.spawn(
-			Unit({}),
-			Replicated({ finishedFor: [] }),
-			Owner({ player: client }),
-			Position({ value: new Vector3(x, 0.75 / 2, z) }),
-			Speed({ value: 10 }),
-			Velocity({ value: Vector3.zero }),
-			Acceleration({ value: Vector3.zero }),
-		)
+		world.spawn(...unitBundle(client, x, z, basic))
 	})
 }
 

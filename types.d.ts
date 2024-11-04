@@ -5,4 +5,7 @@ interface ServerScriptService extends Instance {
 interface ReplicatedStorage extends Instance {
 	client: Folder
 	shared: Folder
+	assets: Folder & {
+		unitModels: Folder
+	}
 }

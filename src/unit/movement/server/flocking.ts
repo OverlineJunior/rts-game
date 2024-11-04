@@ -61,12 +61,14 @@ function alignment(unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Ve
 	return steer
 }
 
-let flag = false
+// Update 1 / UPDATE_FRACTION of units per frame.
+const UPDATE_FRACTION = 3
+
+let counter = 0
 
 function flocking(world: World, { unitGrid }: ServerState) {
 	for (const [unit, pos, vel] of world.query(Position, Velocity, Unit)) {
-		// Based on the alternating flag, we only update even or odd units for performance reasons.
-		if (flag ? unit % 2 === 0 : unit % 2 !== 0) continue
+		if (unit % UPDATE_FRACTION !== counter) continue
 
 		const nearby = unitGrid
 			.query(pos.value.X, pos.value.Z, VIEW_RADIUS)
@@ -83,7 +85,8 @@ function flocking(world: World, { unitGrid }: ServerState) {
 		world.insert(unit, Acceleration({ value: steering }))
 	}
 
-	flag = !flag
+	// Cycle the counter from 0 to UPDATE_FACTION.
+	counter = (counter + 1) % UPDATE_FRACTION;
 }
 
 export = new System(flocking)

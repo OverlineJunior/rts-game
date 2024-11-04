@@ -11,11 +11,26 @@ const client = Players.LocalPlayer
 function reqSpawnUnitCmd() {
 	if (!powerUsers.includes(client.UserId)) return
 
-	UserInputService.InputEnded.Connect((input, ui) => {
+	let running = false
+
+	UserInputService.InputBegan.Connect((input, ui) => {
 		if (ui || input.KeyCode !== SPAWN_BUTTON) return
 
-		const pos = getMouseWorldPosition(500)
-		spawnUnitCmd.fire({ x: pos.X, z: pos.Z })
+		let interval = 0.5
+		running = true
+
+		while (running) {
+			const pos = getMouseWorldPosition(500)
+			spawnUnitCmd.fire({ x: pos.X, z: pos.Z })
+			task.wait(interval)
+			interval = math.max(interval - 0.05, 0.05)
+		}
+	})
+
+	UserInputService.InputEnded.Connect((input, ui) => {
+		if (input.KeyCode !== SPAWN_BUTTON) return
+
+		running = false
 	})
 }
 

@@ -1,4 +1,5 @@
-import { AnyEntity, World } from "@rbxts/matter"
+import { AnyEntity, useThrottle, World } from "@rbxts/matter"
+import { ServerState } from "game/server/serverState"
 import { System } from "game/shared/bootstrap"
 import { Acceleration, Position, Unit, Velocity } from "game/shared/components"
 import { limit } from "game/shared/vector3"
@@ -7,21 +8,6 @@ const VIEW_RADIUS = 4
 
 function distance(a: Vector3, b: Vector3): number {
 	return math.pow(b.X - a.X, 2) + math.pow(b.Z - a.Z, 2)
-}
-
-function nearbyUnits(toUnit: AnyEntity, radius: number, world: World) {
-	const nearby = []
-	const pos = world.get(toUnit, Position)!.value
-
-	for (const [otherUnit, otherPos] of world.query(Position, Unit)) {
-		if (otherUnit === toUnit) continue
-
-		if (distance(pos, otherPos.value) < radius) {
-			nearby.push(otherUnit)
-		}
-	}
-
-	return nearby
 }
 
 function cohesion(unitPos: Vector3, unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Vector3 {
@@ -77,12 +63,17 @@ function alignment(unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Ve
 
 let flag = false
 
-function flocking(world: World) {
+function flocking(world: World, { unitGrid }: ServerState) {
 	for (const [unit, pos, vel] of world.query(Position, Velocity, Unit)) {
 		// Based on the alternating flag, we only update even or odd units for performance reasons.
 		if (flag ? unit % 2 === 0 : unit % 2 !== 0) continue
 
-		const nearby = nearbyUnits(unit, VIEW_RADIUS, world)
+		const nearby = unitGrid
+			.query(pos.value.X, pos.value.Z, VIEW_RADIUS)
+			.filter(u => {
+				const p = world.get(u, Position)!.value
+				return u !== unit && distance(pos.value, p) < VIEW_RADIUS
+			})
 
 		let steering = Vector3.zero
 		steering = steering.add(cohesion(pos.value, vel.value, nearby, world))

@@ -8,12 +8,17 @@ function applyVectors(world: World) {
 		const newVel = vel.value.add(acc.value)
 		const newPos = pos.value.add(newVel.mul(useDeltaTime()))
 
-		world.insert(
-			id,
-			Position({ value: newPos }),
-			Velocity({ value: Vector3.zero }),
-			Acceleration({ value: Vector3.zero }),
-		)
+		if (pos.value !== newPos) {
+			world.insert(id, Position({ value: newPos }))
+		}
+
+		if (vel.value !== Vector3.zero) {
+			world.insert(id, Velocity({ value: Vector3.zero }))
+		}
+
+		if (acc.value !== Vector3.zero) {
+			world.insert(id, Acceleration({ value: Vector3.zero }))
+		}
 	}
 }
 

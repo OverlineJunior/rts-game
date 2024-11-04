@@ -24,7 +24,6 @@
     "typescript": "5.6.3"
   },
   "dependencies": {
-    "@rbxts/link": "^1.0.2",
     "@rbxts/matter": "^0.8.5",
     "@rbxts/plasma": "0.4.5",
     "@rbxts/services": "^1.5.5",

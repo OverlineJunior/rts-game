@@ -2,7 +2,7 @@ import { AnyEntity, World } from "@rbxts/matter"
 import { UserInputService } from "@rbxts/services"
 import { Replica, Selected } from "game/client/components"
 import { getMouseWorldPosition } from "game/shared/mouse"
-import { requestMovement as reqMovement } from "game/shared/remotes"
+import { requestMovement as reqMovement } from "game/client/network"
 import { System } from "game/shared/bootstrap"
 import { canRequestMovement } from "unit/shared/unitUtil"
 
@@ -53,7 +53,7 @@ function requestMovement(world: World) {
 		const goal = getGoal()
 		const increment = UserInputService.IsKeyDown(INCREMENT_BUTTON) ? true : false
 
-		reqMovement.FireServer(serverUnits, goal, increment)
+		reqMovement.fire({ serverIds: serverUnits, x: goal.X, z: goal.Z, increment })
 	})
 }
 

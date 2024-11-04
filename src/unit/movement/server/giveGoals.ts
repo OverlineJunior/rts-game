@@ -3,7 +3,7 @@ import { t } from "@rbxts/t"
 import { System } from "game/shared/bootstrap"
 import { Goal, Owner } from "game/shared/components"
 import Queue from "game/shared/queue"
-import { requestMovement } from "game/shared/remotes"
+import { requestMovement } from "game/server/network"
 import { canRequestMovement } from "unit/shared/unitUtil"
 
 function randomizeGoal(goal: Vector3, unitCount: number): Vector3 {
@@ -19,18 +19,20 @@ function randomizeGoal(goal: Vector3, unitCount: number): Vector3 {
 }
 
 function giveGoals(world: World) {
-	requestMovement.OnServerEvent.Connect((sender, serverUnits, goal, increment) => {
+	requestMovement.on((sender, { serverIds, x, z, increment }) => {
+		const goal = new Vector3(x, 0, z)
+
 		if (
-			!t.array(t.number)(serverUnits)
+			!t.array(t.number)(serverIds)
 			|| !t.Vector3(goal)
 			|| !t.boolean(increment)
-			|| serverUnits.isEmpty()
+			|| serverIds.isEmpty()
 		) return
 
-		(serverUnits as AnyEntity[])
+		(serverIds as AnyEntity[])
 			.filter(id => canRequestMovement(id, world) && world.get(id, Owner)?.player === sender)
 			.forEach(id => {
-				const rGoal = randomizeGoal(goal, serverUnits.size())
+				const rGoal = randomizeGoal(goal, serverIds.size())
 
 				world.insert(id, Goal({
 					queue: increment && world.get(id, Goal)

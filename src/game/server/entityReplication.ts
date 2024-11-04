@@ -1,7 +1,7 @@
 import { AnyEntity } from "@rbxts/matter"
 import { AnyComponent } from "@rbxts/matter/lib/component"
 import { serializeComponents } from "game/shared/componentSerde"
-import { spawnOnClient, despawnOnClient } from "game/shared/remotes"
+import { spawnOnClient, despawnOnClient } from "game/server/network"
 
 const registeredIds: Array<number> = new Array()
 
@@ -18,7 +18,10 @@ const registeredIds: Array<number> = new Array()
 export function spawnFor(clients: Player[], id: AnyEntity, ...components: Array<AnyComponent>) {
 	if (clients.isEmpty()) return
 
-	clients.forEach(client => spawnOnClient.FireClient(client, id, serializeComponents(components)))
+	clients.forEach(client => spawnOnClient.fire(client, {
+		serverId: id,
+		serializedComponents: serializeComponents(components)
+	}))
 	registeredIds.push(id)
 }
 
@@ -32,6 +35,6 @@ export function despawnFor(clients: Player[], id: AnyEntity) {
 
 	if (clients.isEmpty()) return
 
-	clients.forEach(client => despawnOnClient.FireClient(client, id))
+	clients.forEach(client => despawnOnClient.fire(client, { serverId: id }))
 	registeredIds.remove(registeredIds.indexOf(id))
 }

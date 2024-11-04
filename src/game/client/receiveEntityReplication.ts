@@ -2,13 +2,13 @@ import { AnyEntity, World } from "@rbxts/matter"
 import { System } from "game/shared/bootstrap"
 import { deserializeComponents } from "game/shared/componentSerde"
 import { spawnOnClient, despawnOnClient } from "game/shared/remotes"
+import { Replica } from "./components"
 
 const serverToClientId: Map<number, number> = new Map()
 
 function receiveEntityReplication(world: World) {
 	spawnOnClient.OnClientEvent.Connect((serverId, serializedComponents) => {
-		// TODO! Should always insert a Replica component.
-		const clientId = world.spawn(...deserializeComponents(serializedComponents))
+		const clientId = world.spawn(Replica({ serverId }), ...deserializeComponents(serializedComponents))
 		serverToClientId.set(serverId, clientId)
 	})
 

@@ -1,6 +1,6 @@
 import { AnyComponent, AnyEntity, World } from "@rbxts/matter"
 import { Players } from "@rbxts/services"
-import { Replica, Selectable } from "game/client/components"
+import { Selectable } from "game/client/components"
 import { Replicated } from "game/server/components"
 import { spawnFor } from "game/server/entityReplication"
 import { System } from "game/shared/bootstrap"
@@ -26,7 +26,6 @@ function replicateUnitSpawn(world: World) {
 			clientsLeft,
 			id,
 			unit,
-			Replica({ serverId: id }),
 			Selectable({}),
 			...getReplicatedComponents(world, id)
 		)

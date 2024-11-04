@@ -8,6 +8,9 @@ const registeredIds: Array<number> = new Array()
 /**
  * Spawns a new entity in each of the clients' worlds with the given components.
  * Note that the components must be either shared or client-sided, otherwise they'll be ignored.
+ *
+ * The client entity automatically receives a Replica component with the server's entity ID.
+ *
  * @param clients The clients which the entity will be spawned for.
  * @param id The discriminator used for despawning the spawned entity later on.
  * @param components The components to spawn the entity with.

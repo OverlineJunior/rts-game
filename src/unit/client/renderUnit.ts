@@ -34,4 +34,4 @@ function renderUnit(world: World) {
 	}
 }
 
-export = new System(renderUnit)
+export = new System(renderUnit, { priority: -math.huge })

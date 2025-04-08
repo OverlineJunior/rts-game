@@ -1,5 +1,9 @@
 # TODO
 
+## Finish unit orientation
+
+This may also include flocking's alignment algorithm.
+
 ## About the heightmap
 
 Replicating such a large map to the client is a heavy task.

@@ -11,7 +11,7 @@ const REPLICATION_RATE = 1 / 10
 // ! is on interval, thus the latest position will not be catched.
 function replicateUnitPosition(world: World) {
 	for (const [id, pos] of world.query(Position, Unit)) {
-		if (!useThrottle(REPLICATION_RATE, id)) continue
+		//if (!useThrottle(REPLICATION_RATE, id)) continue
 
 		const p = pos.value
 		sendUnitPosition.fireAll({

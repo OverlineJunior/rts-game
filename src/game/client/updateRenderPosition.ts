@@ -1,5 +1,5 @@
 import { World } from "@rbxts/matter"
-import { Position } from "game/shared/components"
+import { Orientation, Position } from "game/shared/components"
 import { Renderable } from "./components"
 import { System } from "game/shared/bootstrap"
 
@@ -8,7 +8,10 @@ function updateRenderPosition(world: World) {
 		if (!posRec.new || !world.get(id, Renderable)) continue
 
 		const model = world.get(id, Renderable)!.model
-		const newCf = new CFrame(posRec.new.value)
+		const ori = world.get(id, Orientation)?.value
+
+		const newCf = ori ? new CFrame(posRec.new.value).mul(ori) : new CFrame(posRec.new.value)
+
 		model.PivotTo(newCf)
 	}
 }

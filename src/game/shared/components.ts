@@ -10,6 +10,9 @@ export type Owner = ReturnType<typeof Owner>
 export const Position = component<{ value: Vector3 }>("Position")
 export type Position = ReturnType<typeof Position>
 
+export const Orientation = component<{ value: CFrame }>("Orientation")
+export type Orientation = ReturnType<typeof Orientation>
+
 export const Speed = component<{ value: number }>("Speed")
 export type Speed = ReturnType<typeof Speed>
 

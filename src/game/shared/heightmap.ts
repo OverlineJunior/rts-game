@@ -10,6 +10,7 @@ export type AltitudeKind =
 */
 
 export interface HeightmapCell {
+	readonly height: number
 	readonly altitude: number
 	// readonly altitudeKind: AltitudeKind
 	readonly normal: Vector3
@@ -19,7 +20,7 @@ export interface HeightmapCell {
 export type HeightmapGrid = HeightmapCell[][]
 
 // How many cells to divide the map into (resolution x resolution).
-const RESOLUTION = 50
+const RESOLUTION = 200
 // The y offset to use when raycasting down from the top of the map.
 // This is so the ray doesn't skip parts that are too close to the top of the map.
 const RAY_YOFFSET = 0.1
@@ -103,6 +104,7 @@ export default class Heightmap {
 					${this.map.GetFullName()} for its heightmap`
 				)
 				rowCells.push({
+					height: raycastRes.Position.Y,
 					altitude: raycastRes.Position.Y - bottom,
 					normal: raycastRes.Normal,
 					part: raycastRes.Instance,

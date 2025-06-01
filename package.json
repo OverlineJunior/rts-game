@@ -12,21 +12,21 @@
   "license": "ISC",
   "devDependencies": {
     "@rbxts/compiler-types": "^3.0.0-types.0",
-    "@rbxts/types": "^1.0.813",
+    "@rbxts/types": "^1.0.856",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
-    "eslint": "9.13.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "5.2.1",
+    "eslint": "9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "5.4.1",
     "eslint-plugin-roblox-ts": "^0.0.36",
-    "prettier": "3.3.3",
+    "prettier": "3.5.3",
     "roblox-ts": "3.0.0",
-    "typescript": "5.6.3"
+    "typescript": "5.8.3"
   },
   "dependencies": {
     "@rbxts/matter": "^0.8.5",
-    "@rbxts/plasma": "0.4.5",
+    "@rbxts/plasma": "^0.4.5",
     "@rbxts/services": "^1.5.5",
-    "@rbxts/t": "^3.1.1"
+    "@rbxts/t": "^3.2.1"
   }
 }

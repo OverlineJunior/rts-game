@@ -4,7 +4,7 @@ import { ClientState } from "game/client/clientState";
 import { System } from "game/shared/bootstrap";
 
 const SELECT_BUTTON = Enum.UserInputType.MouseButton1
-const MIN_HOLD_TIME = 0.1
+const MIN_HOLD_TIME = 0.15
 
 function updateSelectionPoints(_: World, { selection }: ClientState) {
 	let thread: thread | undefined

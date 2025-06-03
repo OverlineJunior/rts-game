@@ -96,18 +96,30 @@ function alignment(unitVel: Vector3, nearbyUnits: AnyEntity[], world: World): Ve
 
 function getConfigs(ui: Widgets): [FlockingConfig, CohesionConfig, SeparationConfig] {
 	ui.label("View Radius")
-	const viewRadius = ui.slider({ min: 0, max: 64, initial: VIEW_RADIUS })
+	const viewRadius = math.floor(ui.slider({ min: 0, max: 64, initial: VIEW_RADIUS }))
+	ui.label(`${viewRadius} studs`)
+	ui.space(20)
 
 	ui.label("Update Fraction")
-	const updateFraction = ui.slider({ min: 1, max: 12, initial: UPDATE_FRACTION })
+	const updateFraction = math.floor(ui.slider({ min: 1, max: 12, initial: UPDATE_FRACTION }))
+	ui.label(`Updating every ${updateFraction} loops`)
+	ui.space(40)
+
 
 	ui.label("Cohesion Multiplier")
-	const cohMul = ui.slider({ min: 0, max: 32, initial: COH_MUL })
+	const cohMul = math.floor(ui.slider({ min: 0, max: 32, initial: COH_MUL }))
+	ui.label(`${cohMul}x`)
+	ui.space(20)
+
 	ui.label("Cohesion Limit")
-	const cohLimit = ui.slider({ min: 0, max: 400, initial: COH_LIMIT })
+	const cohLimit = math.floor(ui.slider({ min: 0, max: 400, initial: COH_LIMIT }))
+	ui.label(`${cohLimit}`)
+	ui.space(40)
+
 
 	ui.label("Separation Multiplier")
-	const sepMul = ui.slider({ min: 0, max: 64, initial: SEP_MUL })
+	const sepMul = math.floor(ui.slider({ min: 0, max: 64, initial: SEP_MUL }))
+	ui.label(`${sepMul}x`)
 
 	const flock: FlockingConfig = { viewRadius, updateFraction }
 
